@@ -33,8 +33,7 @@ public class CdkClassLoaderTest extends CdkTestBase {
 		File libraryFile = getLibraryFile("javax/faces/component/UIComponent.class");
 		assertNotNull(libraryFile);
 		assertFalse(libraryFile.isDirectory());
-		assertTrue(libraryFile.getName().contains("javaee-api") || libraryFile.getName().contains("jsf-api")
-				|| libraryFile.getName().contains("myfaces-api"));
+		assertTrue(libraryFile.getName().contains("javax.faces-api") || libraryFile.getName().contains("myfaces-api"));
 	}
 
 	@Test
@@ -45,6 +44,6 @@ public class CdkClassLoaderTest extends CdkTestBase {
 		Class<?> class1 = loader.loadClass("javax.faces.application.Application");
 		assertNotNull(loader.getResource("javax/faces/FacesException.class"));
 		assertNotNull(loader.getResource("org/richfaces/cdk/apt/test.html"));
-		assertNotNull(loader.getResource("javax/el/ELContext.class"));
+		assertNull(loader.getResource("javax/el/ELContext.class"));
 	}
 }

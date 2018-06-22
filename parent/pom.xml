@@ -21,7 +21,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<version.cdk>4.5.1-SNAPSHOT</version.cdk>
-		<version.spec.javaee>8.0</version.spec.javaee>
+		<version.jsf>2.3-edr1</version.jsf>
 
 		<!-- Compile deps -->
 		<version.freemarker>2.3.9</version.freemarker>
@@ -128,9 +128,9 @@
 		<dependencies>
 
 			<dependency>
-				<groupId>javax</groupId>
-				<artifactId>javaee-api</artifactId>
-				<version>${version.spec.javaee}</version>
+				<groupId>javax.faces</groupId>
+				<artifactId>javax.faces-api</artifactId>
+				<version>${version.jsf}</version>
 			</dependency>
 
 			<!-- CDK -->
