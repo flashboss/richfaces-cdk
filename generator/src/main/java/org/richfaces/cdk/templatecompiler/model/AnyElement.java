@@ -40,7 +40,9 @@ import org.richfaces.cdk.CdkException;
  * @author asmirnov@exadel.com
  */
 public class AnyElement extends ModelFragment {
-    private QName name;
+	
+	private static final long serialVersionUID = -1708382575222491938L;
+	private QName name;
     private String passThrough;
     private String passThroughWithExclusions;
     private Map<QName, Object> attributes = new TreeMap<QName, Object>(QNAME_COMPARATOR);

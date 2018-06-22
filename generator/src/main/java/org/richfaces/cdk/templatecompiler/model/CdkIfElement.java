@@ -31,7 +31,10 @@ import org.richfaces.cdk.CdkException;
  */
 @XmlRootElement(name = "if", namespace = Template.JSTL_CORE_NAMESPACE)
 public class CdkIfElement extends CdkConditionalJstlElementBase {
-    @Override
+	
+	private static final long serialVersionUID = -9140138433250815905L;
+
+	@Override
     public void beforeVisit(TemplateVisitor visitor) throws CdkException {
         visitor.startElement(this);
     }

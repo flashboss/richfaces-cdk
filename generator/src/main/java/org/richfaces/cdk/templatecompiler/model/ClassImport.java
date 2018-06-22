@@ -32,7 +32,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *
  */
 public class ClassImport implements Serializable {
-    private String packageName;
+	
+	private static final long serialVersionUID = -5251454534344584239L;
+	private String packageName;
     private boolean staticImport;
     private List<String> names;
 

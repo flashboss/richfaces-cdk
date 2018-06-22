@@ -43,7 +43,7 @@ public final class Adapters {
 
         @Override
         public ValueType marshal(Map<String, KeyType> v) throws Exception {
-            ValueType valueType = valueTypeClass.newInstance();
+            ValueType valueType = valueTypeClass.getConstructor().newInstance();
             valueType.setChildren(v.values());
             return valueType;
         }

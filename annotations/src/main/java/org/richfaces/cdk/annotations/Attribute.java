@@ -29,7 +29,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import javax.faces.component.behavior.ClientBehavior;
-import javax.faces.el.MethodBinding;
 
 /**
  * <p class="changed_added_4_0">

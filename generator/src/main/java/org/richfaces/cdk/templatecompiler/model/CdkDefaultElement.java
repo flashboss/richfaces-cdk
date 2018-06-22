@@ -31,7 +31,10 @@ import org.richfaces.cdk.CdkException;
  */
 @XmlRootElement(name = "default", namespace = Template.CDK_NAMESPACE)
 public class CdkDefaultElement extends ModelFragment {
-    @Override
+	
+	private static final long serialVersionUID = 5075377484119061362L;
+
+	@Override
     public void beforeVisit(TemplateVisitor visitor) throws CdkException {
         visitor.startElement(this);
     }

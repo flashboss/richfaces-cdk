@@ -197,10 +197,6 @@ public class AptSourceUtils implements SourceUtils {
         }
     }
 
-    private boolean isAbstract(ExecutableElement method) {
-        return method.getModifiers().contains(Modifier.ABSTRACT);
-    }
-
     private boolean isPublicNonStatic(ExecutableElement method) {
         Set<Modifier> modifiers = method.getModifiers();
         return modifiers.contains(Modifier.PUBLIC) && !modifiers.contains(Modifier.STATIC);

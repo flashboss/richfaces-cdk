@@ -30,7 +30,10 @@ package org.richfaces.cdk;
  *
  */
 public class CdkException extends RuntimeException {
-    /**
+	
+	private static final long serialVersionUID = -2059426956470191995L;
+
+	/**
      * <p class="changed_added_4_0">
      * </p>
      */

@@ -123,7 +123,7 @@ public class CdkTestRunner extends BlockJUnit4ClassRunner {
         Injector injector;
         Object test = super.createTest();
         if (Module.class.isAssignableFrom(testClass)) {
-            injector = Guice.createInjector(fields, (Module) testClass.newInstance());
+            injector = Guice.createInjector(fields, (Module) testClass.getConstructor().newInstance());
         } else {
             injector = Guice.createInjector(fields);
         }
@@ -145,8 +145,8 @@ public class CdkTestRunner extends BlockJUnit4ClassRunner {
             bind(MockController.class).toInstance(this);
             // map field values by type
             for (Field field : fields.keySet()) {
-                TypeLiteral literal = TypeLiteral.get(field.getGenericType());
-                AnnotatedBindingBuilder builder = bind(literal);
+                TypeLiteral<Object> literal = (TypeLiteral<Object>)TypeLiteral.get(field.getGenericType());
+                AnnotatedBindingBuilder<Object> builder = bind(literal);
                 // Check field annotations.
                 Annotation[] fieldAnnotations = field.getAnnotations();
                 for (Annotation annotation : fieldAnnotations) {

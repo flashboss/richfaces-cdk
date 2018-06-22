@@ -33,7 +33,9 @@ import org.richfaces.cdk.CdkException;
  */
 @XmlRootElement(name = "scriptObject", namespace = Template.CDK_NAMESPACE)
 public class CdkScriptObjectElement extends ModelFragment {
-    @XmlAttribute(required = true)
+	
+	private static final long serialVersionUID = -1067617677177131364L;
+	@XmlAttribute(required = true)
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     private String name;
     @XmlAttribute

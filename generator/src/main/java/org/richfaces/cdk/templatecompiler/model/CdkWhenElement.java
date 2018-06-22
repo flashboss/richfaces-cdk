@@ -31,7 +31,10 @@ import org.richfaces.cdk.CdkException;
  */
 @XmlRootElement(name = "when", namespace = Template.JSTL_CORE_NAMESPACE)
 public class CdkWhenElement extends CdkConditionalJstlElementBase {
-    @Override
+	
+	private static final long serialVersionUID = -6960405178009943488L;
+
+	@Override
     public void beforeVisit(TemplateVisitor visitor) throws CdkException {
         visitor.startElement(this);
     }

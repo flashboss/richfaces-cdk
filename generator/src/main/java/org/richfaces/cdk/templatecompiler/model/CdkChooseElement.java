@@ -31,7 +31,10 @@ import org.richfaces.cdk.CdkException;
  */
 @XmlRootElement(name = "choose", namespace = Template.JSTL_CORE_NAMESPACE)
 public class CdkChooseElement extends ModelFragment {
-    /*
+	
+	private static final long serialVersionUID = 410045667107430901L;
+
+	/*
      * (non-Javadoc)
      *
      * @see

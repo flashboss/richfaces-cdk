@@ -35,7 +35,9 @@ import org.richfaces.cdk.CdkException;
  */
 @XmlRootElement(name = "scriptOption", namespace = Template.CDK_NAMESPACE)
 public class CdkScriptOptionElement implements ModelElement {
-    @XmlAttribute
+	
+	private static final long serialVersionUID = -738450678346456111L;
+	@XmlAttribute
     private List<String> variables = new ArrayList<String>();
     @XmlAttribute
     private List<String> attributes = new ArrayList<String>();

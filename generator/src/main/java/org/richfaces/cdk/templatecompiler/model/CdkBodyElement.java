@@ -35,7 +35,9 @@ import org.richfaces.cdk.CdkException;
  */
 @XmlRootElement(name = "body", namespace = Template.CDK_NAMESPACE)
 public class CdkBodyElement extends ModelFragment {
-    private boolean enforce = false;
+	
+	private static final long serialVersionUID = 1911854288334480105L;
+	private boolean enforce = false;
 
     /**
      * <p class="changed_added_4_0">

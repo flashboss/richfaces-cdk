@@ -32,7 +32,9 @@ import org.richfaces.cdk.CdkException;
  */
 @XmlRootElement(name = "switch", namespace = Template.CDK_NAMESPACE)
 public class CdkSwitchElement extends ModelFragment {
-    @XmlAttribute
+	
+	private static final long serialVersionUID = 6086643016449618334L;
+	@XmlAttribute
     private String key;
 
     public String getKey() {

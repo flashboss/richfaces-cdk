@@ -31,7 +31,10 @@ import org.richfaces.cdk.CdkException;
  */
 @XmlRootElement(name = "otherwise", namespace = Template.JSTL_CORE_NAMESPACE)
 public class CdkOtherwiseElement extends ModelFragment {
-    @Override
+	
+	private static final long serialVersionUID = 8043459146862029994L;
+
+	@Override
     public void beforeVisit(TemplateVisitor visitor) throws CdkException {
         visitor.startElement(this);
     }
