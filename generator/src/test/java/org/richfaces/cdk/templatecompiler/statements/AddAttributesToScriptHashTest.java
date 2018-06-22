@@ -49,8 +49,6 @@ import com.google.inject.Inject;
 @RunWith(CdkTestRunner.class)
 public class AddAttributesToScriptHashTest extends FreeMarkerTestBase {
     @Inject
-    private TypesFactory typesFactory;
-    @Inject
     private ScriptObjectStatement parentStatement;
     @Inject
     private AddAttributesToScriptHashStatement statement;

@@ -277,31 +277,31 @@ public class TypesFactoryTest extends CdkTestBase {
 
     @Test
     public void testGetStringProperty() throws Exception {
-        ELPropertyDescriptor propertyDescriptor = getAndCheckPropertyDescriptor(Bean2.class, "string", "getString",
+        getAndCheckPropertyDescriptor(Bean2.class, "string", "getString",
                 String.class, true, true);
     }
 
     @Test
     public void testGetRawMapProperty() throws Exception {
-        ELPropertyDescriptor propertyDescriptor = getAndCheckPropertyDescriptor(Bean.class, "rawMap", "getRawMap", Map.class,
+        getAndCheckPropertyDescriptor(Bean.class, "rawMap", "getRawMap", Map.class,
                 true, true);
     }
 
     @Test
     public void testGetBooleanProperty() throws Exception {
-        ELPropertyDescriptor propertyDescriptor = getAndCheckPropertyDescriptor(Bean.class, "readOnly", "isReadOnly",
+        getAndCheckPropertyDescriptor(Bean.class, "readOnly", "isReadOnly",
                 Boolean.TYPE, true, true);
     }
 
     @Test
     public void testGetContextProperty() throws Exception {
-        ELPropertyDescriptor propertyDescriptor = getAndCheckPropertyDescriptor(Bean.class, "context", "getContext",
+        getAndCheckPropertyDescriptor(Bean.class, "context", "getContext",
                 FacesContext.class, true, false);
     }
 
     @Test
     public void testGetDummyProperty() throws Exception {
-        ELPropertyDescriptor propertyDescriptor = getAndCheckPropertyDescriptor(Bean.class, "nonExistedProperty",
+        getAndCheckPropertyDescriptor(Bean.class, "nonExistedProperty",
                 "getNonExistedProperty", Object.class, false, false);
     }
 

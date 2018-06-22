@@ -37,7 +37,6 @@ import org.richfaces.cdk.Mock;
 import org.richfaces.cdk.NamingConventions;
 import org.richfaces.cdk.apt.SourceUtils;
 import org.richfaces.cdk.model.ClassName;
-import org.richfaces.cdk.model.ComponentLibrary;
 import org.richfaces.cdk.model.ComponentModel;
 import org.richfaces.cdk.model.FacesId;
 
@@ -50,44 +49,41 @@ import com.google.inject.Inject;
  */
 @RunWith(CdkTestRunner.class)
 public class ModelValidatorTest extends CdkTestBase {
-    private static final FacesId FOO_BAZ = FacesId.parseId("foo.baz");
-    @Mock
-    protected Logger log;
-    @Mock
-    SourceUtils utils;
-    @Inject
-    ValidatorImpl validator;
-    @Inject
-    private ComponentLibrary library;
-    @Mock
-    private NamingConventions namiingConventions;
+	@Mock
+	protected Logger log;
+	@Mock
+	SourceUtils utils;
+	@Inject
+	ValidatorImpl validator;
+	@Mock
+	private NamingConventions namiingConventions;
 
-    /**
-     * Test method for
-     * {@link org.richfaces.cdk.model.validator.ValidatorImpl#verifyComponent(org.richfaces.cdk.model.ComponentModel)}.
-     */
-    @Test
-    public void testVerifyEmptyComponent() {
-        ComponentModel component = new ComponentModel();
-        log.error((CharSequence) anyObject());
-        expectLastCall();
-        replay(log, utils, namiingConventions);
-        validator.verifyComponentType(component);
-        verify(log, utils, namiingConventions);
-    }
+	/**
+	 * Test method for
+	 * {@link org.richfaces.cdk.model.validator.ValidatorImpl#verifyComponent(org.richfaces.cdk.model.ComponentModel)}.
+	 */
+	@Test
+	public void testVerifyEmptyComponent() {
+		ComponentModel component = new ComponentModel();
+		log.error((CharSequence) anyObject());
+		expectLastCall();
+		replay(log, utils, namiingConventions);
+		validator.verifyComponentType(component);
+		verify(log, utils, namiingConventions);
+	}
 
-    @Test
-    public void testVerifyNoTypeComponent() {
-        ComponentModel component = new ComponentModel();
-        ClassName className = new ClassName("foo.component.UIBar");
-        FacesId type = FacesId.parseId("foo.Bar");
-        component.setTargetClass(className);
-        expect(namiingConventions.inferComponentType(className)).andReturn(type);
-        expect(utils.isClassExists(className)).andReturn(true);
-        replay(log, utils, namiingConventions);
-        // Validator should set component type from base class.
-        validator.verifyComponentType(component);
-        verify(log, utils, namiingConventions);
-        assertEquals(type, component.getId());
-    }
+	@Test
+	public void testVerifyNoTypeComponent() {
+		ComponentModel component = new ComponentModel();
+		ClassName className = new ClassName("foo.component.UIBar");
+		FacesId type = FacesId.parseId("foo.Bar");
+		component.setTargetClass(className);
+		expect(namiingConventions.inferComponentType(className)).andReturn(type);
+		expect(utils.isClassExists(className)).andReturn(true);
+		replay(log, utils, namiingConventions);
+		// Validator should set component type from base class.
+		validator.verifyComponentType(component);
+		verify(log, utils, namiingConventions);
+		assertEquals(type, component.getId());
+	}
 }

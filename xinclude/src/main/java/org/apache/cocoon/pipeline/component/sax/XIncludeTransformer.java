@@ -40,9 +40,6 @@ import org.xml.sax.ext.LexicalHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 public final class XIncludeTransformer implements SAXConsumer {
-    private static final String DEFAULT_CHARSET = "UTF-8";
-    private static final String HTTP_ACCEPT = "Accept";
-    private static final String HTTP_ACCEPT_LANGUAGE = "Accept-Language";
     private static final String UNKNOWN_LOCATION = "unknow location";
     private static final String XINCLUDE_ACCEPT = "accept";
     private static final String XINCLUDE_ACCEPT_LANGUAGE = "accept-language";
