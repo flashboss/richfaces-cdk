@@ -37,7 +37,6 @@ import com.google.inject.Inject;
  * @author Nick Belaevski
  */
 public class SwitchStatement extends FreeMarkerTemplateStatementBase {
-    private String keyExpression;
     private final ELParser parser;
     private final Logger log;
     private TypedTemplateStatement statement;
@@ -64,7 +63,6 @@ public class SwitchStatement extends FreeMarkerTemplateStatementBase {
      */
     public void setKeyExpression(String keyExpression) {
         try {
-            this.keyExpression = keyExpression;
             this.statement = parser.parse(keyExpression, this, TypesFactory.OBJECT_TYPE);
             statement.setParent(this);
         } catch (ParsingException e) {

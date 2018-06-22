@@ -54,11 +54,9 @@ public class HelperMethodFactoryImpl implements HelperMethodFactory {
     private String rendererUtilsClass = "org.richfaces.renderkit.RenderKitUtils";
     private FreeMarkerRenderer renderer;
     private final EnumMap<HelperMethod, JavaMethod> helperMethods = Maps.newEnumMap(HelperMethod.class);
-    private final Logger log;
 
     @Inject
     public HelperMethodFactoryImpl(Logger log) {
-        this.log = log;
     }
 
     /**

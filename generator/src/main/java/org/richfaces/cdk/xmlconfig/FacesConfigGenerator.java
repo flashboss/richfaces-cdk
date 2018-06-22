@@ -94,20 +94,4 @@ public class FacesConfigGenerator implements CdkWriter {
             }
         }
     }
-
-    /**
-     * <p class="changed_added_4_0">
-     * Check that library is empty
-     * </p>
-     *
-     * @param library
-     * @return
-     */
-    private boolean empty(ComponentLibrary library) {
-
-        return library.getComponents().isEmpty() && library.getBehaviors().isEmpty() && library.getConverters().isEmpty()
-                && library.getEvents().isEmpty() && library.getFunctions().isEmpty() && library.getListeners().isEmpty()
-                && library.getRenderKits().isEmpty() && library.getValidators().isEmpty()
-                && library.getExtension().getExtensions().isEmpty();
-    }
 }

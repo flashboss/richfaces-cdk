@@ -36,7 +36,6 @@ import org.richfaces.cdk.templatecompiler.builder.model.JavaImport;
  */
 public class TemplateStatementImpl implements TemplateStatement {
     private final String code;
-    private StatementsContainer parent;
 
     public TemplateStatementImpl(String code) {
         this.code = code;
@@ -92,6 +91,5 @@ public class TemplateStatementImpl implements TemplateStatement {
      */
     @Override
     public void setParent(StatementsContainer parent) {
-        this.parent = parent;
     }
 }
