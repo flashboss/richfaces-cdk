@@ -14,8 +14,8 @@
     <dependencies>
         <!-- Java EE -->
         <dependency>
-            <groupId>org.jboss.spec.javax.faces</groupId>
-            <artifactId>jboss-jsf-api_2.1_spec</artifactId>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
             <scope>provided</scope>
         </dependency>
     </dependencies>

@@ -68,67 +68,68 @@ import com.google.inject.Inject;
  */
 @RunWith(CdkTestRunner.class)
 public class TaskFactoryTest extends AnnotationProcessorTestBase {
-    private static final String CLASS_JAVA = "org/richfaces/cdk/apt/TestClass.java";
-    private static final String INTERFACE_JAVA = "org/richfaces/cdk/apt/TestInterface.java";
-    private static final String SUB_CLASS_JAVA = "org/richfaces/cdk/apt/TestSubClass.java";
-    @Mock
-    CdkProcessor processor;
-    @Inject
-    private TaskFactoryImpl factory;
-    @Stub
-    @Output(Outputs.JAVA_CLASSES)
-    private FileManager output;
+	private static final String CLASS_JAVA = "org/richfaces/cdk/apt/TestClass.java";
+	private static final String INTERFACE_JAVA = "org/richfaces/cdk/apt/TestInterface.java";
+	private static final String SUB_CLASS_JAVA = "org/richfaces/cdk/apt/TestSubClass.java";
+	@Mock
+	CdkProcessor processor;
+	@Inject
+	private TaskFactoryImpl factory;
+	@Stub
+	@Output(Outputs.JAVA_CLASSES)
+	private FileManager output;
 
-    /**
-     * Test method for {@link org.richfaces.cdk.apt.TaskFactoryImpl#get()}.
-     *
-     * @throws Exception
-     * @throws AptException
-     */
-    @Test
-    public void testGetTask() throws Exception {
-        expect(output.getFolders()).andReturn(null);
-        replay(processor, output);
+	/**
+	 * Test method for {@link org.richfaces.cdk.apt.TaskFactoryImpl#get()}.
+	 *
+	 * @throws Exception
+	 * @throws AptException
+	 */
+	@Test
+	public void testGetTask() throws Exception {
+		expect(output.getFolders()).andReturn(null);
+		replay(processor, output);
 
-        CompilationTask task = factory.get();
+		CompilationTask task = factory.get();
 
-        assertNotNull(task);
-        verify(processor, output);
-    }
+		assertNotNull(task);
+		verify(processor, output);
+	}
 
-    @Test
-    public void testTask() throws Exception {
-        expect(output.getFolders()).andReturn(null);
-        processor.init((ProcessingEnvironment) anyObject());
-        expectLastCall();
-        expect(processor.getSupportedSourceVersion()).andReturn(SourceVersion.RELEASE_6);
-        expect(processor.getSupportedAnnotationTypes()).andReturn(Collections.singleton("*"));
-        expect(processor.getSupportedOptions()).andReturn(Collections.<String>emptySet());
-        // processor.process(null,null);
-        Capture<Set<? extends TypeElement>> capturedTypes = new Capture<Set<? extends TypeElement>>(CaptureType.FIRST);
+	@Test
+	public void testTask() throws Exception {
+		expect(output.getFolders()).andReturn(null);
+		processor.init((ProcessingEnvironment) anyObject());
+		expectLastCall();
+		expect(processor.getSupportedSourceVersion()).andReturn(SourceVersion.RELEASE_10);
+		expect(processor.getSupportedAnnotationTypes()).andReturn(Collections.singleton("*"));
+		expect(processor.getSupportedOptions()).andReturn(Collections.<String>emptySet());
+		// processor.process(null,null);
+		Capture<Set<? extends TypeElement>> capturedTypes = new Capture<Set<? extends TypeElement>>(CaptureType.FIRST);
 
-        expect(processor.process(capture(capturedTypes), EasyMock.<RoundEnvironment>anyObject())).andReturn(true).times(2);
-        replay(processor, output);
-        CompilationTask task = factory.get();
-        assertTrue(task.call());
-        Set<? extends TypeElement> elements = capturedTypes.getValue();
+		expect(processor.process(capture(capturedTypes), EasyMock.<RoundEnvironment>anyObject())).andReturn(true)
+				.times(2);
+		replay(processor, output);
+		CompilationTask task = factory.get();
+		assertTrue(task.call());
+		Set<? extends TypeElement> elements = capturedTypes.getValue();
 
-        assertFalse(elements.isEmpty());
+		assertFalse(elements.isEmpty());
 
-        Collection<String> typeNames = Collections2.transform(elements, new Function<TypeElement, String>() {
-            @Override
-            public String apply(TypeElement e) {
-                return e.getSimpleName().toString();
-            }
-        });
-        assertTrue(typeNames.contains("TestAnnotation2"));
-        assertTrue(typeNames.contains("TestMethodAnnotation"));
+		Collection<String> typeNames = Collections2.transform(elements, new Function<TypeElement, String>() {
+			@Override
+			public String apply(TypeElement e) {
+				return e.getSimpleName().toString();
+			}
+		});
+		assertTrue(typeNames.contains("TestAnnotation2"));
+		assertTrue(typeNames.contains("TestMethodAnnotation"));
 
-        verify(processor, output);
-    }
+		verify(processor, output);
+	}
 
-    @Override
-    protected Iterable<String> sources() {
-        return ImmutableList.of(CLASS_JAVA, SUB_CLASS_JAVA);
-    }
+	@Override
+	protected Iterable<String> sources() {
+		return ImmutableList.of(CLASS_JAVA, SUB_CLASS_JAVA, INTERFACE_JAVA);
+	}
 }

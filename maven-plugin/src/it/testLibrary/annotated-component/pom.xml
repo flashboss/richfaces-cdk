@@ -40,8 +40,8 @@
                 <version>2.0.2</version>
                 <configuration>
                     <!-- http://maven.apache.org/plugins/maven-compiler-plugin/ -->
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
         </plugins>
