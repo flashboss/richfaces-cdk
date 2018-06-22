@@ -34,7 +34,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.richfaces.cdk.JavaLogger;
 import org.xml.sax.XMLReader;
-import javax.xml.parsers.SAXParserFactory;
+import org.xml.sax.helpers.XMLReaderFactory;
 
 public final class XIncludeTransformerTest {
     private static final SAXTransformerFactory SAX_TRANSFORMER_FACTORY = (SAXTransformerFactory) TransformerFactory
@@ -106,7 +106,7 @@ public final class XIncludeTransformerTest {
 
         xinclude.setContentHandler(transformerHandler);
 
-        XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
+        XMLReader xmlReader = XMLReaderFactory.createXMLReader();
 
         xmlReader.setContentHandler(xinclude);
         xmlReader.setProperty("http://xml.org/sax/properties/lexical-handler", xinclude);
