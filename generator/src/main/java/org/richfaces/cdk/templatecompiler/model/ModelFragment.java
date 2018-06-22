@@ -22,7 +22,9 @@ import com.google.common.collect.Lists;
         CdkDefaultElement.class, CdkScriptObjectElement.class, CdkScriptOptionElement.class, CompositeRenderFacet.class,
         CdkRenderFragmentElement.class })
 public class ModelFragment implements LeafModelElement {
-    private List<Object> children = Lists.newArrayList();
+	
+	private static final long serialVersionUID = -2113702640967354223L;
+	private List<Object> children = Lists.newArrayList();
 
     @XmlAnyElement(lax = true, value = ElementsHandler.class)
     @XmlMixed

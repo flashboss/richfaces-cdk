@@ -390,7 +390,6 @@ public class GenerateMojo extends AbstractMojo {
      * @return
      * @throws MojoExecutionException
      */
-    @SuppressWarnings("unchecked")
     protected Collection<File> doScan(FileSet[] filesets) throws MojoExecutionException {
         List<File> files = new ArrayList<File>();
 

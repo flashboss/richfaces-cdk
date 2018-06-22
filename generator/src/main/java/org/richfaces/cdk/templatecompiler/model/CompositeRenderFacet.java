@@ -36,7 +36,8 @@ import org.richfaces.cdk.CdkException;
 @XmlRootElement(name = "renderFacet", namespace = Template.COMPOSITE_NAMESPACE)
 public class CompositeRenderFacet extends ModelFragment {
 
-    @XmlAttribute(required = true)
+	private static final long serialVersionUID = -1738259830378039595L;
+	@XmlAttribute(required = true)
     private String name;
 
     @Override

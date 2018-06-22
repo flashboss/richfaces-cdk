@@ -112,7 +112,6 @@ public final class ELVisitor implements TypedTemplateStatement {
     private final TypesFactory typesFactory;
     private boolean mixedExpression;
     private boolean literal = true;
-    private StatementsContainer parent;
 
     public ELVisitor(Logger log, TypesFactory typesFactory) {
         this.log = log;
@@ -376,6 +375,5 @@ public final class ELVisitor implements TypedTemplateStatement {
 
     @Override
     public void setParent(StatementsContainer parent) {
-        this.parent = parent;
     }
 }

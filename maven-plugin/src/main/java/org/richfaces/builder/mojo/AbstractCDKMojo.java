@@ -47,7 +47,7 @@ public abstract class AbstractCDKMojo extends AbstractMojo {
      * Project classpath.
      */
     @Parameter(property="project.compileClasspathElements", readonly=true, required=true)
-    protected List classpathElements;
+    protected List<?> classpathElements;
     /**
      * The source directories containing the sources to be compiled.
      */

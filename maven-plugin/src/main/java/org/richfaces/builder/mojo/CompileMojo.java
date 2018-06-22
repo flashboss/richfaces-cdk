@@ -44,258 +44,247 @@ import org.apache.maven.project.MavenProjectBuilder;
 import org.apache.maven.project.ProjectBuildingException;
 import org.codehaus.plexus.PlexusConstants;
 import org.codehaus.plexus.PlexusContainer;
-import org.codehaus.plexus.archiver.manager.ArchiverManager;
 import org.codehaus.plexus.component.repository.exception.ComponentLookupException;
 import org.codehaus.plexus.context.Context;
 import org.codehaus.plexus.context.ContextException;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.Contextualizable;
 
 /**
- * Compile all xml templates, matched given pattern to Java classes. Sources will be created in
- * {@link AbstractCDKMojo#outputJavaDirectory}
+ * Compile all xml templates, matched given pattern to Java classes. Sources
+ * will be created in {@link AbstractCDKMojo#outputJavaDirectory}
  *
  * @author shura
  *
  */
-@Mojo(name="compile", defaultPhase = LifecyclePhase.GENERATE_SOURCES, requiresDependencyResolution= ResolutionScope.COMPILE)
+@Mojo(name = "compile", defaultPhase = LifecyclePhase.GENERATE_SOURCES, requiresDependencyResolution = ResolutionScope.COMPILE)
 public class CompileMojo extends AbstractCDKMojo implements Contextualizable {
-    /**
-     * To look up Archiver/UnArchiver implementations
-     *
-     * @component
-     */
-    private ArchiverManager archiverManager;
-    private PlexusContainer container;
-    @Parameter(defaultValue="${project.groupId}")
-    private String defaultPackage;
-    /**
-     * A list of exclusion filters for the compiler. None by default.
-     *
-     * @parameter
-     */
-    private String[] excludes;
-    /**
-     * Project executed by first compile lifecycle.
-     */
-    @Parameter(property="executedProject", readonly=true)
-    private MavenProject executedProject;
-    /**
-     * A list of inclusion filters for the compiler. By default, include all files in templates directory.
-     */
-    @Parameter
-    private String[] includes;
-    /**
-     * The local repository.
-     */
-    @Parameter(property="localRepository")
-    private ArtifactRepository localRepository;
-    /**
-     * Project builder
-     */
-    @Component
-    private MavenProjectBuilder mavenProjectBuilder;
-    /**
-     * The reactor projects.
-     */
-    @Parameter(property="project.parent", readonly=true)
-    private MavenProject parentProject;
+	/**
+	 * To look up Archiver/UnArchiver implementations
+	 *
+	 * @component
+	 */
+	private PlexusContainer container;
+	@Parameter(defaultValue = "${project.groupId}")
+	private String defaultPackage;
+	/**
+	 * Project executed by first compile lifecycle.
+	 */
+	@Parameter(property = "executedProject", readonly = true)
+	private MavenProject executedProject;
+	/**
+	 * A list of inclusion filters for the compiler. By default, include all files
+	 * in templates directory.
+	 */
+	@Parameter
+	private String[] includes;
+	/**
+	 * The local repository.
+	 */
+	@Parameter(property = "localRepository")
+	private ArtifactRepository localRepository;
+	/**
+	 * Project builder
+	 */
+	@Component
+	private MavenProjectBuilder mavenProjectBuilder;
+	/**
+	 * The reactor projects.
+	 */
+	@Parameter(property = "project.parent", readonly = true)
+	private MavenProject parentProject;
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see org.apache.maven.plugin.Mojo#execute()
-     */
-    public void execute() throws MojoExecutionException, MojoFailureException {
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.apache.maven.plugin.Mojo#execute()
+	 */
+	public void execute() throws MojoExecutionException, MojoFailureException {
 
-        // VelocityTemplates.init();
-        try {
-            List components = container.lookupList("org.richfaces.templatecompiler.elements.ElementsFactory");
+		// VelocityTemplates.init();
+		try {
+			List components = container.lookupList("org.richfaces.templatecompiler.elements.ElementsFactory");
 
-            for (Iterator iter = components.iterator(); iter.hasNext();) {
-                Object element = iter.next();
+			for (Iterator iter = components.iterator(); iter.hasNext();) {
+				Object element = iter.next();
 
-                System.out.println(element.getClass().getName());
-            }
+				System.out.println(element.getClass().getName());
+			}
 
-            System.out.println("Components Map");
+			System.out.println("Components Map");
 
-            Map componentsMap = container.lookupMap("org.richfaces.templatecompiler.elements.ElementsFactory");
+			Map componentsMap = container.lookupMap("org.richfaces.templatecompiler.elements.ElementsFactory");
 
-            for (Iterator iter = componentsMap.entrySet().iterator(); iter.hasNext();) {
-                Map.Entry element = (Map.Entry) iter.next();
+			for (Iterator iter = componentsMap.entrySet().iterator(); iter.hasNext();) {
+				Map.Entry element = (Map.Entry) iter.next();
 
-                System.out.println(element.getKey() + ":" + element.getValue().getClass().getName());
-            }
-        } catch (ComponentLookupException e) {
-            throw new MojoExecutionException("Error lookup ElementFactory components");
-        }
+				System.out.println(element.getKey() + ":" + element.getValue().getClass().getName());
+			}
+		} catch (ComponentLookupException e) {
+			throw new MojoExecutionException("Error lookup ElementFactory components");
+		}
 
-        Parent parentModel = project.getModel().getParent();
+		Parent parentModel = project.getModel().getParent();
 
-        if (null != parentModel) {
-            String relativePath = parentModel.getRelativePath();
-            File parentPom = new File(project.getFile().getParentFile(), relativePath);
+		if (null != parentModel) {
+			String relativePath = parentModel.getRelativePath();
+			File parentPom = new File(project.getFile().getParentFile(), relativePath);
 
-            if (parentPom.isDirectory()) {
-                parentPom = new File(parentPom, "pom.xml");
-            }
+			if (parentPom.isDirectory()) {
+				parentPom = new File(parentPom, "pom.xml");
+			}
 
-            if (parentPom.exists()) {
-                try {
-                    parentProject = mavenProjectBuilder.build(parentPom, localRepository, null);
-                } catch (ProjectBuildingException e) {
-                    throw new MojoExecutionException("Error get parent project for a components library", e);
-                }
-            } else {
-                throw new MojoFailureException("Parent project pom file " + parentPom.getAbsolutePath()
-                        + " is not found for a components library");
-            }
-        } else {
-            throw new MojoFailureException("Components library project must have parent pom with components modules");
-        }
+			if (parentPom.exists()) {
+				try {
+					parentProject = mavenProjectBuilder.build(parentPom, localRepository, null);
+				} catch (ProjectBuildingException e) {
+					throw new MojoExecutionException("Error get parent project for a components library", e);
+				}
+			} else {
+				throw new MojoFailureException("Parent project pom file " + parentPom.getAbsolutePath()
+						+ " is not found for a components library");
+			}
+		} else {
+			throw new MojoFailureException("Components library project must have parent pom with components modules");
+		}
 
-        getLog().info("Parent Project object :\n" + toLog(parentProject) + "\n");
-        getLog().info("Project object :\n" + toLog(project) + "\n");
-        getLog().info("Project object Model :\n" + toLog(project.getModel()) + "\n");
-        getLog().info("Project object Parent Model :\n" + toLog(project.getModel().getParent()) + "\n");
-        getLog().info("Executed Project object :\n" + toLog(executedProject) + "\n");
-    }
+		getLog().info("Parent Project object :\n" + toLog(parentProject) + "\n");
+		getLog().info("Project object :\n" + toLog(project) + "\n");
+		getLog().info("Project object Model :\n" + toLog(project.getModel()) + "\n");
+		getLog().info("Project object Parent Model :\n" + toLog(project.getModel().getParent()) + "\n");
+		getLog().info("Executed Project object :\n" + toLog(executedProject) + "\n");
+	}
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * org.codehaus.plexus.personality.plexus.lifecycle.phase.Contextualizable#contextualize(org.codehaus.plexus.context.Context
-     * )
-     */
-    public void contextualize(Context context) throws ContextException {
-        this.container = (PlexusContainer) context.get(PlexusConstants.PLEXUS_KEY);
-    }
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.codehaus.plexus.personality.plexus.lifecycle.phase.Contextualizable#
+	 * contextualize(org.codehaus.plexus.context.Context )
+	 */
+	public void contextualize(Context context) throws ContextException {
+		this.container = (PlexusContainer) context.get(PlexusConstants.PLEXUS_KEY);
+	}
 
-    private void logBean(Object bean) {
-        StringBuffer content = new StringBuffer();
-    }
+	/**
+	 * Convert any Java Object to JavaScript representation ( as possible ).
+	 *
+	 * @param obj
+	 * @return
+	 * @throws MojoExecutionException
+	 */
+	public String toLog(Object obj) throws MojoExecutionException {
+		if (null == obj) {
+			return "null";
+		} else if (obj.getClass().isArray()) {
+			StringBuffer ret = new StringBuffer("[");
+			boolean first = true;
 
-    /**
-     * Convert any Java Object to JavaScript representation ( as possible ).
-     *
-     * @param obj
-     * @return
-     * @throws MojoExecutionException
-     */
-    public String toLog(Object obj) throws MojoExecutionException {
-        if (null == obj) {
-            return "null";
-        } else if (obj.getClass().isArray()) {
-            StringBuffer ret = new StringBuffer("[");
-            boolean first = true;
+			for (int i = 0; i < Array.getLength(obj); i++) {
+				Object element = Array.get(obj, i);
 
-            for (int i = 0; i < Array.getLength(obj); i++) {
-                Object element = Array.get(obj, i);
+				if (!first) {
+					ret.append(',');
+				}
 
-                if (!first) {
-                    ret.append(',');
-                }
+				ret.append(toLog(element));
+				first = false;
+			}
 
-                ret.append(toLog(element));
-                first = false;
-            }
+			return ret.append("]\n").toString();
+		} else if (obj instanceof Collection) {
 
-            return ret.append("]\n").toString();
-        } else if (obj instanceof Collection) {
+			// Collections put as JavaScript array.
+			Collection collection = (Collection) obj;
+			StringBuffer ret = new StringBuffer("[");
+			boolean first = true;
 
-            // Collections put as JavaScript array.
-            Collection collection = (Collection) obj;
-            StringBuffer ret = new StringBuffer("[");
-            boolean first = true;
+			for (Iterator iter = collection.iterator(); iter.hasNext();) {
+				Object element = iter.next();
 
-            for (Iterator iter = collection.iterator(); iter.hasNext();) {
-                Object element = iter.next();
+				if (!first) {
+					ret.append(',');
+				}
 
-                if (!first) {
-                    ret.append(',');
-                }
+				ret.append(toLog(element));
+				first = false;
+			}
 
-                ret.append(toLog(element));
-                first = false;
-            }
+			return ret.append("]\n").toString();
+		} else if (obj instanceof Map) {
 
-            return ret.append("]\n").toString();
-        } else if (obj instanceof Map) {
+			// Maps put as JavaScript hash.
+			Map map = (Map) obj;
+			StringBuffer ret = new StringBuffer("{");
+			boolean first = true;
 
-            // Maps put as JavaScript hash.
-            Map map = (Map) obj;
-            StringBuffer ret = new StringBuffer("{");
-            boolean first = true;
+			for (Iterator iter = map.keySet().iterator(); iter.hasNext();) {
+				Object key = (Object) iter.next();
 
-            for (Iterator iter = map.keySet().iterator(); iter.hasNext();) {
-                Object key = (Object) iter.next();
+				if (!first) {
+					ret.append(',');
+				}
 
-                if (!first) {
-                    ret.append(',');
-                }
+				ret.append(key);
+				ret.append(":");
+				ret.append(toLog(map.get(key)));
+				first = false;
+			}
 
-                ret.append(key);
-                ret.append(":");
-                ret.append(toLog(map.get(key)));
-                first = false;
-            }
+			return ret.append("}\n").toString();
+		} else if (obj instanceof Number || obj instanceof Boolean) {
 
-            return ret.append("}\n").toString();
-        } else if (obj instanceof Number || obj instanceof Boolean) {
+			// numbers and boolean put as-is, without conversion
+			return obj.toString();
+		} else if (obj instanceof String) {
 
-            // numbers and boolean put as-is, without conversion
-            return obj.toString();
-        } else if (obj instanceof String) {
+			// all other put as encoded strings.
+			StringBuffer ret = new StringBuffer();
 
-            // all other put as encoded strings.
-            StringBuffer ret = new StringBuffer();
+			addEncodedString(ret, obj);
 
-            addEncodedString(ret, obj);
+			return ret.append("\n").toString();
+		}
 
-            return ret.append("\n").toString();
-        }
+		// All other objects threaded as Java Beans.
+		try {
+			StringBuffer ret = new StringBuffer("{");
+			PropertyDescriptor[] propertyDescriptors = Introspector.getBeanInfo(obj.getClass())
+					.getPropertyDescriptors();
+			boolean first = true;
 
-        // All other objects threaded as Java Beans.
-        try {
-            StringBuffer ret = new StringBuffer("{");
-            PropertyDescriptor[] propertyDescriptors = Introspector.getBeanInfo(obj.getClass()).getPropertyDescriptors();
-            boolean first = true;
+			for (int i = 0; i < propertyDescriptors.length; i++) {
+				PropertyDescriptor propertyDescriptor = propertyDescriptors[i];
+				String key = propertyDescriptor.getName();
 
-            for (int i = 0; i < propertyDescriptors.length; i++) {
-                PropertyDescriptor propertyDescriptor = propertyDescriptors[i];
-                String key = propertyDescriptor.getName();
+				if (!"class".equals(key) && propertyDescriptor.getReadMethod() != null) {
+					if (!first) {
+						ret.append(",\n\t");
+					}
 
-                if (!"class".equals(key) && propertyDescriptor.getReadMethod() != null) {
-                    if (!first) {
-                        ret.append(",\n\t");
-                    }
+					addEncodedString(ret, key);
+					ret.append(":");
 
-                    addEncodedString(ret, key);
-                    ret.append(":");
+					try {
+						Object value = propertyDescriptor.getReadMethod().invoke(obj, new Object[] {});
 
-                    try {
-                        Object value = propertyDescriptor.getReadMethod().invoke(obj, new Object[] {});
+						propertyDescriptor.getReadMethod();
+						ret.append(String.valueOf(value));
+					} catch (InvocationTargetException e) {
+						ret.append("null");
+					} // ret.append(toLog(PropertyUtils.getProperty(obj, key)));
 
-                        propertyDescriptor.getReadMethod();
-                        ret.append(String.valueOf(value));
-                    } catch (InvocationTargetException e) {
-                        ret.append("null");
-                    } // ret.append(toLog(PropertyUtils.getProperty(obj, key)));
+					first = false;
+				}
+			}
 
-                    first = false;
-                }
-            }
+			return ret.append("}\n").toString();
+		} catch (Exception e) {
+			throw new MojoExecutionException("Error in conversion Java Object to String", e);
+		}
+	}
 
-            return ret.append("}\n").toString();
-        } catch (Exception e) {
-            throw new MojoExecutionException("Error in conversion Java Object to String", e);
-        }
-    }
-
-    public void addEncodedString(StringBuffer buff, Object obj) {
-        buff.append("'");
-        buff.append(obj);
-        buff.append("'");
-    }
+	public void addEncodedString(StringBuffer buff, Object obj) {
+		buff.append("'");
+		buff.append(obj);
+		buff.append("'");
+	}
 }

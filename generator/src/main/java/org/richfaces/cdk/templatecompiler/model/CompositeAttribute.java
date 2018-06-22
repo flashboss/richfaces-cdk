@@ -32,7 +32,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "attribute", namespace = Template.COMPOSITE_NAMESPACE)
 public class CompositeAttribute implements Serializable {
 
-    @XmlAttribute(required = true)
+	private static final long serialVersionUID = 6081186890840818977L;
+
+	@XmlAttribute(required = true)
     private String name;
 
     @XmlAttribute
