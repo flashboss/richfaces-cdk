@@ -88,5 +88,7 @@ public class BehaviorBean extends ElementBeanBase<BehaviorBean.BehaviorExtension
     }
 
     public static class BehaviorExtension extends TagExtensionBase {
+
+		private static final long serialVersionUID = -2838114862145442942L;
     }
 }

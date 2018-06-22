@@ -44,7 +44,6 @@ import com.google.common.collect.ImmutableList;
  */
 public class AptSourceUtilsAnnotatedPropertiesTest extends SourceUtilsTestBase {
     private static final String TEST_SUB_CLASS = "AnnotatedSubClass";
-    private static final String TEST_CLASS = "AnnotatedSuperclass";
     private static final String TEST_INTERFACE = "TestInterface";
     private static final String PACKAGE_PATH = "org/richfaces/cdk/apt/";
     private static final String SUB_CLASS_JAVA = PACKAGE_PATH + TEST_SUB_CLASS + ".java";

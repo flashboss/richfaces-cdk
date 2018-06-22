@@ -143,7 +143,9 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
      * @author asmirnov@exadel.com
      */
     public static class PropertyExtension extends ConfigExtension {
-        private Boolean passThrough;
+    	
+		private static final long serialVersionUID = 6871959691308708176L;
+		private Boolean passThrough;
         private Set<EventName> eventNames = Sets.newLinkedHashSet();
         private MethodSignature signature;
         private String aliasFor;

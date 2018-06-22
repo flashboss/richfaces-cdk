@@ -87,5 +87,7 @@ public class ValidatorBean extends ElementBeanBase<ValidatorBean.ValidatorExtens
     }
 
     public static class ValidatorExtension extends TagExtensionBase {
+
+		private static final long serialVersionUID = -8014124283688478529L;
     }
 }

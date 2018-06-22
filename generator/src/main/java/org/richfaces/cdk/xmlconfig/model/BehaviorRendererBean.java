@@ -92,7 +92,9 @@ public class BehaviorRendererBean {
      * @author asmirnov@exadel.com
      */
     public static class BehaviorRendererExtension extends ConfigExtension {
-        private ClassName baseClass;
+    	
+		private static final long serialVersionUID = -2119010991982684920L;
+		private ClassName baseClass;
 
         /**
          * <p class="changed_added_4_0">

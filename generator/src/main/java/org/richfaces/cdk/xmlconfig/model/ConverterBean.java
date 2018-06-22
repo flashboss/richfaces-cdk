@@ -97,5 +97,7 @@ public class ConverterBean extends ElementBeanBase<ConverterBean.ConverterExtens
     }
 
     public static class ConverterExtension extends TagExtensionBase {
+
+		private static final long serialVersionUID = -5906114656539910932L;
     }
 }

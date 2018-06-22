@@ -16,12 +16,7 @@ import org.junit.Test;
  *
  */
 public class LibraryBuilderTest extends CdkTestBase {
-    private static final String[] JAVA_INCLUDES = new String[] { "**/*.java" };
-    private static final String MAIN_CONFIG = "src/main/config";
-    private static final String MAIN_TEMPLATES = "src/main/templates";
     private static final String PROJECT_BASE = "";
-    private static final String[] STRINGS_ARRAY = new String[0];
-    private static final String XML_INCLUDES = "**/*.xml";
     protected File outputJavaDirectory = new File(PROJECT_BASE + "target/generated-sources/main/java");
     protected File outputResourcesDirectory = new File(PROJECT_BASE + "target/generated-sources/main/resources");
     protected File outputTestDirectory = new File(PROJECT_BASE + "target/generated-sources/test/java");

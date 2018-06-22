@@ -49,7 +49,6 @@ import com.google.inject.Inject;
 @RunWith(CdkTestRunner.class)
 public class DescriptionProcessorTest extends AnnotationProcessorTestBase {
     private static final String FOO_BAR_ELEMENT = "Foo bar element";
-    private static final String FOO_FACET = "fooFacet";
     @Mock
     private DescriptionGroup bean;
     @Mock

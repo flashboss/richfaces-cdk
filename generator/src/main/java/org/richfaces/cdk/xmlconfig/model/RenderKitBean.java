@@ -156,5 +156,7 @@ public class RenderKitBean extends ExtensibleBean<RenderKitBean.RenderKitExtensi
      * @author asmirnov@exadel.com
      */
     public static class RenderKitExtension extends ConfigExtension {
+    	
+		private static final long serialVersionUID = 6285918573441018666L;
     }
 }

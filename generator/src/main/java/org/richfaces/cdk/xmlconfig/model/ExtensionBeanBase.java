@@ -8,7 +8,9 @@ import org.richfaces.cdk.model.ComponentLibrary;
 import org.richfaces.cdk.model.ConfigExtension;
 
 public class ExtensionBeanBase extends ConfigExtension {
-    private ClassName baseClass;
+	
+	private static final long serialVersionUID = -5002643561811405242L;
+	private ClassName baseClass;
     private Boolean generate;
 
     public ExtensionBeanBase() {

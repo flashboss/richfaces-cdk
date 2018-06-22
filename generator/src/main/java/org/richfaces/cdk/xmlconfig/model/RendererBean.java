@@ -147,7 +147,9 @@ public class RendererBean extends ElementBeanBase<RendererBean.RendererExtension
      * @author asmirnov@exadel.com
      */
     public static class RendererExtension extends ConfigExtension {
-        private TagModel tag;
+    	
+		private static final long serialVersionUID = -440908981853705826L;
+		private TagModel tag;
         private Boolean rendersChildren;
 
         /**

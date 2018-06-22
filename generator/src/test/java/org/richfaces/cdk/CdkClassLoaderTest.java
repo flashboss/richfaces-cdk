@@ -40,10 +40,11 @@ public class CdkClassLoaderTest extends CdkTestBase {
 	public void testClassLoader() throws Exception {
 		Iterable<File> paths = Lists.newArrayList(getLibraryFile("test.source.properties"),
 				getLibraryFile("javax/faces/component/UIComponent.class"));
-		CdkClassLoader loader = new CdkClassLoader(paths, null);
-		Class<?> class1 = loader.loadClass("javax.faces.application.Application");
-		assertNotNull(loader.getResource("javax/faces/FacesException.class"));
-		assertNotNull(loader.getResource("org/richfaces/cdk/apt/test.html"));
-		assertNull(loader.getResource("javax/el/ELContext.class"));
+		try (CdkClassLoader loader = new CdkClassLoader(paths, null)) {
+			loader.loadClass("javax.faces.application.Application");
+			assertNotNull(loader.getResource("javax/faces/FacesException.class"));
+			assertNotNull(loader.getResource("org/richfaces/cdk/apt/test.html"));
+			assertNull(loader.getResource("javax/el/ELContext.class"));
+		}
 	}
 }

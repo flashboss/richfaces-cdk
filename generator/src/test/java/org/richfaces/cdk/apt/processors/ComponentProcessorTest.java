@@ -54,7 +54,6 @@ import org.richfaces.cdk.annotations.Facet;
 import org.richfaces.cdk.apt.AnnotationProcessorTestBase;
 import org.richfaces.cdk.apt.SourceUtils;
 import org.richfaces.cdk.apt.SourceUtils.BeanProperty;
-import org.richfaces.cdk.model.ComponentLibrary;
 import org.richfaces.cdk.model.ComponentModel;
 import org.richfaces.cdk.model.FacetModel;
 import org.richfaces.cdk.xmlconfig.JAXB;
@@ -74,8 +73,6 @@ public class ComponentProcessorTest extends AnnotationProcessorTestBase {
     public static final String LARGE_GIF = "/icons/Large.gif";
     public static final String SMALL_JPG = "/icons/Small.jpg";
     private static final String COMPONENT_CLASS_JAVA = "org/richfaces/cdk/test/component/AbstractTestComponent.java";
-    private static final String FACES_COMPONENT_CLASS_JAVA = "org/richfaces/cdk/test/component/UITestCommand.java";
-    private static final String FOO_HTML_BAR = "foo.HtmlBar";
     @Mock
     private AnnotationMirror annotation;
     @Mock
@@ -90,8 +87,6 @@ public class ComponentProcessorTest extends AnnotationProcessorTestBase {
     private DescriptionProcessor descriptionProcessor;
     @Mock
     private JAXB jaxb;
-    @Inject
-    private ComponentLibrary library;
     @Inject
     private ComponentModel model;
     @Inject

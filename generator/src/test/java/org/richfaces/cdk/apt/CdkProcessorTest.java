@@ -67,11 +67,8 @@ import com.google.inject.TypeLiteral;
  */
 @RunWith(CdkTestRunner.class)
 public class CdkProcessorTest extends AnnotationProcessorTestBase {
-    private static final String ANNOTATION2 = TestAnnotation2.class.getName();
     private static final String CLASS_JAVA = "org/richfaces/cdk/apt/TestClass.java";
-    private static final String COMPONENT_CLASS_JAVA = "org/richfaces/cdk/test/component/AbstractTestComponent.java";
     private static final String INTERFACE_JAVA = "org/richfaces/cdk/apt/TestInterface.java";
-    private static final ImmutableSet<String> PROCESS_ANNOTATIONS = ImmutableSet.of(TestAnnotation.class.getName());
     private static final String SUB_CLASS_JAVA = "org/richfaces/cdk/apt/TestSubClass.java";
 
     @Inject

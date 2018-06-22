@@ -10,7 +10,9 @@ import org.richfaces.cdk.model.TagModel;
 import com.google.common.collect.Lists;
 
 public class TagExtensionBase extends ExtensionBeanBase {
-    private List<TagModel> tags = Lists.newArrayList();
+	
+	private static final long serialVersionUID = -1410074363576967553L;
+	private List<TagModel> tags = Lists.newArrayList();
 
     /**
      * <p class="changed_added_4_0">

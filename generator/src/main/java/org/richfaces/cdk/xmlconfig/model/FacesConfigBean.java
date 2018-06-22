@@ -200,7 +200,9 @@ public class FacesConfigBean implements Extensible<FacesConfigBean.FacesConfigEx
     }
 
     public static final class FacesConfigExtension extends ConfigExtension {
-        private String prefix;
+    	
+		private static final long serialVersionUID = -7567657285539440514L;
+		private String prefix;
         private Taglib taglib;
         private List<EventModel> events = Lists.newArrayList();
         private List<FunctionModel> functions = Lists.newArrayList();

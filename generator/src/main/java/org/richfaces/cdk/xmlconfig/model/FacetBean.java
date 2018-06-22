@@ -85,7 +85,9 @@ public class FacetBean extends ExtensibleBean<FacetBean.FacetExtension> {
      * @author asmirnov@exadel.com
      */
     public static final class FacetExtension extends ConfigExtension {
-        private Boolean generate;
+    	
+		private static final long serialVersionUID = 119136781637725022L;
+		private Boolean generate;
 
         /**
          * <p class="changed_added_4_0">

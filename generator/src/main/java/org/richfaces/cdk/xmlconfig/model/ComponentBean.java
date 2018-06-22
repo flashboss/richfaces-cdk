@@ -150,7 +150,9 @@ public class ComponentBean extends ElementBeanBase<ComponentBean.ComponentExtens
     }
 
     public static class ComponentExtension extends TagExtensionBase {
-        private FacesId rendererType;
+    	
+		private static final long serialVersionUID = -4175281929956209456L;
+		private FacesId rendererType;
         private List<EventModel> events = Lists.newArrayList();
         private FacesId family;
 

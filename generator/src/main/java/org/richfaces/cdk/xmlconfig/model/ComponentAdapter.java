@@ -31,8 +31,6 @@ import org.richfaces.cdk.model.ComponentModel;
  * @author asmirnov@exadel.com
  */
 public class ComponentAdapter extends ElementAdapterBase<ComponentBean, ComponentModel> {
-    private static final AttributeAdapter ATTRIBUTE_ADAPTER = new AttributeAdapter();
-    private static final FacetAdapter FACET_ADAPTER = new FacetAdapter();
 
     @Override
     protected Class<? extends ComponentBean> getBeanClass(ComponentModel c) {
