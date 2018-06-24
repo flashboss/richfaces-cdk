@@ -24,9 +24,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParserFactory;
-
 import org.apache.cocoon.pipeline.component.xpointer.XPointer;
 import org.apache.cocoon.pipeline.component.xpointer.XPointerContext;
 import org.apache.cocoon.pipeline.component.xpointer.parser.ParseException;
@@ -40,6 +37,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.ext.EntityResolver2;
 import org.xml.sax.ext.LexicalHandler;
+import org.xml.sax.helpers.XMLReaderFactory;
 
 public final class XIncludeTransformer implements SAXConsumer {
     private static final String UNKNOWN_LOCATION = "unknow location";
@@ -275,14 +273,14 @@ public final class XIncludeTransformer implements SAXConsumer {
                 } else {
 
                     // just parses the document and streams it
-                    XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
+                    XMLReader xmlReader = XMLReaderFactory.createXMLReader();
 
                     xmlReader.setContentHandler(this);
                     xmlReader.setEntityResolver(resolver);
                     xmlReader.setProperty("http://xml.org/sax/properties/lexical-handler", this);
                     xmlReader.parse(source);
                 }
-            } catch (ParseException | ParserConfigurationException e) {
+            } catch (ParseException e) {
 
                 // this exception is thrown in case of an invalid xpointer expression
                 useFallbackLevel++;
