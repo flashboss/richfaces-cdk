@@ -28,35 +28,37 @@ package org.richfaces.cdk.model;
  * @author akolonitsky
  * @since Jan 23, 2010
  *
- * @param <R> type of result returned by visitXXX method.
- * @param <D> type of parameter for visit methods.
+ * @param <R>
+ *            type of result returned by visitXXX method.
+ * @param <D>
+ *            type of parameter for visit methods.
  */
 public interface Visitor<R, D> {
-    R visitComponentLibrary(ComponentLibrary model, D param);
+	R visitComponentLibrary(ComponentLibrary model, D param);
 
-    R visitComponent(ComponentModel model, D param);
+	R visitComponent(ComponentModel model, D param);
 
-    R visitConverter(ConverterModel model, D param);
+	R visitConverter(ConverterModel model, D param);
 
-    R visitValidator(ValidatorModel model, D param);
+	R visitValidator(ValidatorModel model, D param);
 
-    R visitBehavior(BehaviorModel model, D param);
+	R visitBehavior(BehaviorModel model, D param);
 
-    R visitFacet(FacetModel model, D param);
+	R visitFacet(FacetModel model, D param);
 
-    R visitEvent(EventModel model, D param);
+	R visitEvent(EventModel model, D param);
 
-    R visitBehaviorRenderer(BehaviorRendererModel model, D param);
+	R visitBehaviorRenderer(BehaviorRendererModel model, D param);
 
-    R visitProperty(PropertyBase model, D param);
+	R visitProperty(PropertyBase model, D param);
 
-    R visitRenderKit(RenderKitModel model, D param);
+	R visitRenderKit(RenderKitModel model, D param);
 
-    R visitRender(RendererModel model, D param);
+	R visitRender(RendererModel model, D param);
 
-    R visitListener(ListenerModel model, D param);
+	R visitListener(ListenerModel model, D param);
 
-    R visitFunction(FunctionModel model, D param);
+	R visitFunction(FunctionModel model, D param);
 
-    R visit(ModelElement model, D param);
+	R visit(ModelElement<?> model, D param);
 }

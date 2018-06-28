@@ -36,7 +36,6 @@ import java.util.Set;
 
 import javax.el.MethodExpression;
 import javax.faces.component.UIOutput;
-import javax.faces.el.MethodBinding;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -60,86 +59,86 @@ import com.google.inject.Inject;
  */
 @RunWith(CdkTestRunner.class)
 public class ComponentClassGeneratorTest extends AbstractClassGeneratorTest {
-    @Inject
-    private ComponentClassGenerator generator;
+	@Inject
+	private ComponentClassGenerator generator;
 
-    public static ComponentModel createComponent() {
-        ComponentModel component = new ComponentModel(FacesId.parseId("foo.bar"));
-        component.setGenerate(true);
-        component.setTargetClass(ClassName.parseName("org.richfaces.cdk.generate.java.GeneratedComponent"));
-        component.setBaseClass(ClassName.parseName(UIOutput.class.getName()));
-        component.setRendererType(FacesId.parseId("foo.barRenderer"));
+	public static ComponentModel createComponent() {
+		ComponentModel component = new ComponentModel(FacesId.parseId("foo.bar"));
+		component.setGenerate(true);
+		component.setTargetClass(ClassName.parseName("org.richfaces.cdk.generate.java.GeneratedComponent"));
+		component.setBaseClass(ClassName.parseName(UIOutput.class.getName()));
+		component.setRendererType(FacesId.parseId("foo.barRenderer"));
 
-        PropertyBase attribute = component.getOrCreateAttribute("testValue");
-        attribute.setType(new ClassName(Object.class));
-        attribute.setGenerate(true);
+		PropertyBase attribute = component.getOrCreateAttribute("testValue");
+		attribute.setType(new ClassName(Object.class));
+		attribute.setGenerate(true);
 
-        attribute = component.getOrCreateAttribute("testFlag");
-        attribute.setType(new ClassName(Boolean.TYPE));
-        attribute.setRequired(true);
-        attribute.setGenerate(true);
+		attribute = component.getOrCreateAttribute("testFlag");
+		attribute.setType(new ClassName(Boolean.TYPE));
+		attribute.setRequired(true);
+		attribute.setGenerate(true);
 
-        attribute = component.getOrCreateAttribute("testBinding");
-        attribute.setType(new ClassName(MethodBinding.class));
-        attribute.setGenerate(true);
-        attribute.setBinding(true);
-        attribute.setBindingAttribute(true);
+		attribute = component.getOrCreateAttribute("testBinding");
+		attribute.setType(new ClassName(MethodExpression.class));
+		attribute.setGenerate(true);
+		attribute.setBinding(true);
+		attribute.setBindingAttribute(true);
 
-        attribute = component.getOrCreateAttribute("testExpr");
-        attribute.setType(new ClassName(MethodExpression.class));
-        attribute.setGenerate(true);
-        attribute.setBindingAttribute(true);
-        MethodSignature signature = new MethodSignature();
-        signature.setParameters(Arrays.asList(new ClassName(String.class), new ClassName(Integer.class)));
-        attribute.setSignature(signature);
+		attribute = component.getOrCreateAttribute("testExpr");
+		attribute.setType(new ClassName(MethodExpression.class));
+		attribute.setGenerate(true);
+		attribute.setBindingAttribute(true);
+		MethodSignature signature = new MethodSignature();
+		signature.setParameters(Arrays.asList(new ClassName(String.class), new ClassName(Integer.class)));
+		attribute.setSignature(signature);
 
-        attribute = component.getOrCreateAttribute("id");
-        attribute.setType(new ClassName(String.class));
-        attribute.setGenerate(false);
+		attribute = component.getOrCreateAttribute("id");
+		attribute.setType(new ClassName(String.class));
+		attribute.setGenerate(false);
 
-        attribute = component.getOrCreateAttribute("listStrings");
-        attribute.setType(new ClassName(new ArrayList<String>().getClass()));
-        attribute.setGenerate(true);
+		attribute = component.getOrCreateAttribute("listStrings");
+		attribute.setType(new ClassName(new ArrayList<String>().getClass()));
+		attribute.setGenerate(true);
 
-        attribute = component.getOrCreateAttribute("listInteger");
-        attribute.setType(new ClassName(new ArrayList<Integer>().getClass()));
-        attribute.setGenerate(true);
+		attribute = component.getOrCreateAttribute("listInteger");
+		attribute.setType(new ClassName(new ArrayList<Integer>().getClass()));
+		attribute.setGenerate(true);
 
-        attribute = component.getOrCreateAttribute("list");
-        attribute.setType(new ClassName(ArrayList.class));
-        attribute.setGenerate(true);
+		attribute = component.getOrCreateAttribute("list");
+		attribute.setType(new ClassName(ArrayList.class));
+		attribute.setGenerate(true);
 
-        Set<EventName> eventNames = attribute.getEventNames();
-        eventNames.add(getEvent("id", false));
-        eventNames.add(getEvent("action", true));
+		Set<EventName> eventNames = attribute.getEventNames();
+		eventNames.add(getEvent("id", false));
+		eventNames.add(getEvent("action", true));
 
-        return component;
-    }
+		return component;
+	}
 
-    public ComponentClassGenerator getGenerator() {
-        return generator;
-    }
+	public ComponentClassGenerator getGenerator() {
+		return generator;
+	}
 
-    public void setGenerator(ComponentClassGenerator generator) {
-        this.generator = generator;
-    }
+	public void setGenerator(ComponentClassGenerator generator) {
+		this.generator = generator;
+	}
 
-    @Test
-    public void testGetOutputFileComponent() throws Exception {
-        final StringWriter outputWriter = new StringWriter();
-        expect(output.createOutput((String) anyObject(), anyInt())).andReturn(outputWriter);
-        replay(output);
+	@Test
+	public void testGetOutputFileComponent() throws Exception {
+		final StringWriter outputWriter = new StringWriter();
+		expect(output.createOutput((String) anyObject(), anyInt())).andReturn(outputWriter);
+		replay(output);
 
-        ComponentModel component = createComponent();
+		ComponentModel component = createComponent();
 
-        library.getComponents().add(component);
+		library.getComponents().add(component);
 
-        generator.generate(library, component);
-        log.debug(outputWriter.toString());
+		generator.generate(library, component);
+		log.debug(outputWriter.toString());
 
-        verify(output);
+		verify(output);
 
-        JavaSourceParser sourceParser = JavaSourceParser.parse(outputWriter.toString());
-        assertTrue(sourceParser.containsMethod("isTestFlag"));
-    }
+		JavaSourceParser sourceParser = JavaSourceParser.parse(outputWriter.toString());
+		assertTrue(sourceParser.containsMethod("isTestFlag"));
+	}
 }

@@ -75,7 +75,9 @@ public interface DescriptionGroup {
      */
     @XmlType(name = "iconType", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE, propOrder = { "smallIcon", "largeIcon" })
     public static final class Icon implements Serializable {
-        private String largeIcon;
+
+		private static final long serialVersionUID = -7169954361619125125L;
+		private String largeIcon;
         private String smallIcon;
 
         /**

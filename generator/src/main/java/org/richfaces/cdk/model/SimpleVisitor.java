@@ -22,80 +22,82 @@
 package org.richfaces.cdk.model;
 
 /**
- * Implementation for easy on inheritance. By default, all calls delegated to the {@link #defaultAction(Visitable, Object)}
- * method.
+ * Implementation for easy on inheritance. By default, all calls delegated to
+ * the {@link #defaultAction(Visitable, Object)} method.
  *
  * @author akolonitsky
  * @since Feb 22, 2010
  */
 public abstract class SimpleVisitor<R, D> implements Visitor<R, D> {
-    /**
-     * <p class="changed_added_4_0">
-     * Default action for all visitXXX method.
-     * </p>
-     *
-     * @param model visited object.
-     * @param param optional parameter for visit method.
-     * @return null by default.
-     */
-    protected R defaultAction(Visitable model, D param) {
-        return null;
-    }
+	/**
+	 * <p class="changed_added_4_0">
+	 * Default action for all visitXXX method.
+	 * </p>
+	 *
+	 * @param model
+	 *            visited object.
+	 * @param param
+	 *            optional parameter for visit method.
+	 * @return null by default.
+	 */
+	protected R defaultAction(Visitable model, D param) {
+		return null;
+	}
 
-    public R visitComponentLibrary(ComponentLibrary model, D param) {
-        return defaultAction(model, param);
-    }
+	public R visitComponentLibrary(ComponentLibrary model, D param) {
+		return defaultAction(model, param);
+	}
 
-    public R visitComponent(ComponentModel model, D param) {
-        return defaultAction(model, param);
-    }
+	public R visitComponent(ComponentModel model, D param) {
+		return defaultAction(model, param);
+	}
 
-    public R visitConverter(ConverterModel model, D param) {
-        return defaultAction(model, param);
-    }
+	public R visitConverter(ConverterModel model, D param) {
+		return defaultAction(model, param);
+	}
 
-    public R visitValidator(ValidatorModel model, D param) {
-        return defaultAction(model, param);
-    }
+	public R visitValidator(ValidatorModel model, D param) {
+		return defaultAction(model, param);
+	}
 
-    public R visitBehavior(BehaviorModel model, D param) {
-        return defaultAction(model, param);
-    }
+	public R visitBehavior(BehaviorModel model, D param) {
+		return defaultAction(model, param);
+	}
 
-    public R visitFacet(FacetModel model, D param) {
-        return defaultAction(model, param);
-    }
+	public R visitFacet(FacetModel model, D param) {
+		return defaultAction(model, param);
+	}
 
-    public R visitEvent(EventModel model, D param) {
-        return defaultAction(model, param);
-    }
+	public R visitEvent(EventModel model, D param) {
+		return defaultAction(model, param);
+	}
 
-    public R visitBehaviorRenderer(BehaviorRendererModel model, D param) {
-        return defaultAction(model, param);
-    }
+	public R visitBehaviorRenderer(BehaviorRendererModel model, D param) {
+		return defaultAction(model, param);
+	}
 
-    public R visitProperty(PropertyBase model, D param) {
-        return defaultAction(model, param);
-    }
+	public R visitProperty(PropertyBase model, D param) {
+		return defaultAction(model, param);
+	}
 
-    public R visitRenderKit(RenderKitModel model, D param) {
-        return defaultAction(model, param);
-    }
+	public R visitRenderKit(RenderKitModel model, D param) {
+		return defaultAction(model, param);
+	}
 
-    public R visitRender(RendererModel model, D param) {
-        return defaultAction(model, param);
-    }
+	public R visitRender(RendererModel model, D param) {
+		return defaultAction(model, param);
+	}
 
-    public R visitListener(ListenerModel model, D param) {
-        return defaultAction(model, param);
-    }
+	public R visitListener(ListenerModel model, D param) {
+		return defaultAction(model, param);
+	}
 
-    @Override
-    public R visitFunction(FunctionModel model, D param) {
-        return defaultAction(model, param);
-    }
+	@Override
+	public R visitFunction(FunctionModel model, D param) {
+		return defaultAction(model, param);
+	}
 
-    public R visit(ModelElement model, D param) {
-        return defaultAction(model, param);
-    }
+	public R visit(ModelElement<?> model, D param) {
+		return defaultAction(model, param);
+	}
 }

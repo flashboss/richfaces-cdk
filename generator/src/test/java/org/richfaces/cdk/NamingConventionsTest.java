@@ -38,7 +38,6 @@ import org.richfaces.cdk.model.FacesId;
  *
  */
 public class NamingConventionsTest {
-    private static final String BASE = "foo.bar";
     private static final FacesId COMPONENT_TYPE = FacesId.parseId("foo.bar.Test");
     private RichFacesConventions conventions;
 

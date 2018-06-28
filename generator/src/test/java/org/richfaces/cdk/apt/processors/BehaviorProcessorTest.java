@@ -100,7 +100,7 @@ public class BehaviorProcessorTest extends AnnotationProcessorTestBase {
         expect(behaviorAnnotation.tag()).andReturn(new Tag[] { tag });
         expect(behaviorAnnotation.attributes()).andReturn(new String[] {});
         expect(behaviorAnnotation.description()).andReturn(this.description);
-        expect(tag.handler()).andStubReturn("");
+        expect(tag.handlerClass()).andStubReturn(null);
         utils.visitSupertypes((TypeElement) anyObject(), (SuperTypeVisitor) anyObject());
         expectLastCall();
         expect(utils.getBeanPropertiesAnnotatedWith(eq(Attribute.class), (TypeElement) anyObject())).andReturn(

@@ -39,6 +39,9 @@ public class BeanModelBase extends DescriptionGroupBase {
 			.<PropertyBase>create(new PropertyBaseComparator());
 
 	private static class PropertyBaseComparator implements Comparator<PropertyBase>, Serializable {
+
+		private static final long serialVersionUID = 5163525999553572141L;
+
 		@Override
 		public int compare(PropertyBase o1, PropertyBase o2) {
 			if (o1 != null && o2 != null && null != o1.getName() && null != o2.getName()) {

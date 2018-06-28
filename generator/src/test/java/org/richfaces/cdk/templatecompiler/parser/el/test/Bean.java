@@ -28,89 +28,89 @@ import java.util.Map;
 import javax.faces.context.FacesContext;
 
 public class Bean {
-    private UIComponent[] array = new UIComponent[] { new UIComponent() };
-    private List<UIComponent> components;
-    private Map<String, UIComponent> facets;
-    private Map rawMap;
-    private boolean readOnly;
-    private Bean2 testBean2;
+	private UIComponent[] array = new UIComponent[] { new UIComponent() };
+	private List<UIComponent> components;
+	private Map<String, UIComponent> facets;
+	private Map<Object, Object> rawMap;
+	private boolean readOnly;
+	private Bean2 testBean2;
 
-    public Bean() {
-        facets = new HashMap<String, UIComponent>();
-        rawMap = new HashMap();
+	public Bean() {
+		facets = new HashMap<String, UIComponent>();
+		rawMap = new HashMap<Object, Object>();
 
-        UIComponent value = new UIComponent();
+		UIComponent value = new UIComponent();
 
-        facets.put("header", value);
-        components = new ArrayList<UIComponent>();
-        components.add(value);
-    }
+		facets.put("header", value);
+		components = new ArrayList<UIComponent>();
+		components.add(value);
+	}
 
-    public Integer count(Integer i) {
-        return null;
-    }
+	public Integer count(Integer i) {
+		return null;
+	}
 
-    public UIComponent[] getArray() {
-        return array;
-    }
+	public UIComponent[] getArray() {
+		return array;
+	}
 
-    public List<UIComponent> getComponents() {
-        return components;
-    }
+	public List<UIComponent> getComponents() {
+		return components;
+	}
 
-    public UIComponent getFacet(String name) {
-        return facets.get(name);
-    }
+	public UIComponent getFacet(String name) {
+		return facets.get(name);
+	}
 
-    public Map<String, UIComponent> getFacets() {
-        return facets;
-    }
+	public Map<String, UIComponent> getFacets() {
+		return facets;
+	}
 
-    public Map getRawMap() {
-        return rawMap;
-    }
+	public Map<Object, Object> getRawMap() {
+		return rawMap;
+	}
 
-    public Bean2 getTestBean2() {
-        return testBean2;
-    }
+	public Bean2 getTestBean2() {
+		return testBean2;
+	}
 
-    public boolean isReadOnly() {
-        return readOnly;
-    }
+	public boolean isReadOnly() {
+		return readOnly;
+	}
 
-    public FacesContext getContext() {
-        return null;
-    }
+	public FacesContext getContext() {
+		return null;
+	}
 
-    public void setArray(UIComponent[] array) {
-        this.array = array;
-    }
+	public void setArray(UIComponent[] array) {
+		this.array = array;
+	}
 
-    public void setComponents(List<UIComponent> components) {
-        this.components = components;
-    }
+	public void setComponents(List<UIComponent> components) {
+		this.components = components;
+	}
 
-    public void setFacets(Map<String, UIComponent> facets) {
-        this.facets = facets;
-    }
+	public void setFacets(Map<String, UIComponent> facets) {
+		this.facets = facets;
+	}
 
-    public void setRawMap(Map rawMap) {
-        this.rawMap = rawMap;
-    }
+	public void setRawMap(Map<Object, Object> rawMap) {
+		this.rawMap = rawMap;
+	}
 
-    public void setReadOnly(boolean readOnly) {
-        this.readOnly = readOnly;
-    }
+	public void setReadOnly(boolean readOnly) {
+		this.readOnly = readOnly;
+	}
 
-    public void setTestBean2(Bean2 testBean2) {
-        this.testBean2 = testBean2;
-    }
+	public void setTestBean2(Bean2 testBean2) {
+		this.testBean2 = testBean2;
+	}
 
-    public void test(UIComponent comp, boolean test) {
-    }
+	public void test(UIComponent comp, boolean test) {
+	}
 
-    @Override
-    public String toString() {
-        return super.toString();
-    }
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 }
