@@ -39,6 +39,8 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.UnmarshallerHandler;
 import javax.xml.bind.util.ValidationEventCollector;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.sax.SAXSource;
@@ -51,7 +53,6 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.ext.EntityResolver2;
-import org.xml.sax.helpers.XMLReaderFactory;
 
 import com.google.inject.Inject;
 
@@ -63,195 +64,204 @@ import com.google.inject.Inject;
  *
  */
 public class JAXBBinding implements JAXB {
-    private static final FacesConfigNamespacePreffixMapper PREFFIX_MAPPER = new FacesConfigNamespacePreffixMapper();
-    @Inject
-    private EntityResolver2 resolver;
-    @Inject
-    private Logger log;
+	private static final FacesConfigNamespacePreffixMapper PREFFIX_MAPPER = new FacesConfigNamespacePreffixMapper();
+	@Inject
+	private EntityResolver2 resolver;
+	@Inject
+	private Logger log;
 
-    public JAXBBinding() {
-    }
+	public JAXBBinding() {
+	}
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see org.richfaces.cdk.xmlconfig.JAXB#unmarshal(java.io.File, java.lang.String, java.lang.Class)
-     */
-    @Override
-    public <T> T unmarshal(File file, String schemaLocation, Class<T> bindClass) throws CdkException, FileNotFoundException {
-        InputSource input = new InputSource(new FileInputStream(file));
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.richfaces.cdk.xmlconfig.JAXB#unmarshal(java.io.File,
+	 * java.lang.String, java.lang.Class)
+	 */
+	@Override
+	public <T> T unmarshal(File file, String schemaLocation, Class<T> bindClass)
+			throws CdkException, FileNotFoundException {
+		InputSource input = new InputSource(new FileInputStream(file));
 
-        input.setSystemId(file.toURI().toString());
+		input.setSystemId(file.toURI().toString());
 
-        T unmarshal = unmarshal(schemaLocation, bindClass, input);
+		T unmarshal = unmarshal(schemaLocation, bindClass, input);
 
-        return unmarshal;
-    }
+		return unmarshal;
+	}
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see org.richfaces.cdk.xmlconfig.JAXB#unmarshal(java.lang.String, java.lang.String, java.lang.Class)
-     */
-    @Override
-    public <T> T unmarshal(String url, String schemaLocation, Class<T> bindClass) throws CdkException, FileNotFoundException {
-        try {
-            InputSource inputSource;
-            try {
-                inputSource = resolver.resolveEntity(null, url);
-            } catch (SAXException e) {
-                inputSource = null;
-            }
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.richfaces.cdk.xmlconfig.JAXB#unmarshal(java.lang.String,
+	 * java.lang.String, java.lang.Class)
+	 */
+	@Override
+	public <T> T unmarshal(String url, String schemaLocation, Class<T> bindClass)
+			throws CdkException, FileNotFoundException {
+		try {
+			InputSource inputSource;
+			try {
+				inputSource = resolver.resolveEntity(null, url);
+			} catch (SAXException e) {
+				inputSource = null;
+			}
 
-            if (null == inputSource) {
-                inputSource = new InputSource(url);
-            }
+			if (null == inputSource) {
+				inputSource = new InputSource(url);
+			}
 
-            T unmarshal = unmarshal(schemaLocation, bindClass, inputSource);
+			T unmarshal = unmarshal(schemaLocation, bindClass, inputSource);
 
-            return unmarshal;
-        } catch (IOException e) {
-            throw new FileNotFoundException("XML file not found at " + url);
-        }
-    }
+			return unmarshal;
+		} catch (IOException e) {
+			throw new FileNotFoundException("XML file not found at " + url);
+		}
+	}
 
-    @SuppressWarnings("unchecked")
-    // TODO nick - schemaLocation is unused
-    <T> T unmarshal(String schemaLocation, Class<T> bindClass, InputSource inputSource) throws CdkException {
-        T unmarshal = null;
+	@SuppressWarnings("unchecked")
+	// TODO nick - schemaLocation is unused
+	<T> T unmarshal(String schemaLocation, Class<T> bindClass, InputSource inputSource) throws CdkException {
+		T unmarshal = null;
 
-        try {
-            XMLReader xmlReader = XMLReaderFactory.createXMLReader();
+		try {
+			SAXParserFactory spf = SAXParserFactory.newInstance();
+			spf.setNamespaceAware(true);
 
-            xmlReader.setEntityResolver(resolver);
-            xmlReader.setFeature("http://xml.org/sax/features/validation", true);
-            xmlReader.setFeature("http://apache.org/xml/features/validation/schema", true);
-            xmlReader.setFeature("http://apache.org/xml/features/validation/dynamic", true);
+			XMLReader xmlReader = spf.newSAXParser().getXMLReader();
 
-            // Setup JAXB to unmarshal
-            // TODO - create xinclude content handler that process xinclude directives
-            // and send SAX event to the unmarshaller handler.
-            Unmarshaller u = JAXBContext.newInstance(bindClass).createUnmarshaller();
-            u.setEventHandler(new ValidationEventCollector());
+			xmlReader.setEntityResolver(resolver);
+			xmlReader.setFeature("http://xml.org/sax/features/validation", true);
+			xmlReader.setFeature("http://apache.org/xml/features/validation/schema", true);
+			xmlReader.setFeature("http://apache.org/xml/features/validation/dynamic", true);
 
-            XIncludeTransformer xIncludeTransformer = new XIncludeTransformer(log);
+			// Setup JAXB to unmarshal
+			// TODO - create xinclude content handler that process xinclude directives
+			// and send SAX event to the unmarshaller handler.
+			Unmarshaller u = JAXBContext.newInstance(bindClass).createUnmarshaller();
+			u.setEventHandler(new ValidationEventCollector());
 
-            if (null != inputSource.getSystemId()) {
-                xIncludeTransformer.setBaseUri(new URI(inputSource.getSystemId()));
-            }
+			XIncludeTransformer xIncludeTransformer = new XIncludeTransformer(log);
 
-            UnmarshallerHandler unmarshallerHandler = u.getUnmarshallerHandler();
+			if (null != inputSource.getSystemId()) {
+				xIncludeTransformer.setBaseUri(new URI(inputSource.getSystemId()));
+			}
 
-            xIncludeTransformer.setContentHandler(unmarshallerHandler);
-            xIncludeTransformer.setResolver(resolver);
-            xmlReader.setContentHandler(xIncludeTransformer);
-            xmlReader.setProperty("http://xml.org/sax/properties/lexical-handler", xIncludeTransformer);
-            xmlReader.parse(inputSource);
+			UnmarshallerHandler unmarshallerHandler = u.getUnmarshallerHandler();
 
-            // turn off the JAXB provider's default validation mechanism to
-            // avoid duplicate validation
-            // u.setValidating(false);
-            unmarshal = (T) unmarshallerHandler.getResult();
-        } catch (JAXBException e) {
-            throw new CdkException("JAXB Unmarshaller error: " + e.getMessage(), e);
-        } catch (URISyntaxException e) {
-            throw new CdkException("Invalid XML source URI: " + e.getMessage(), e);
-        } catch (IOException e) {
-            throw new CdkException("JAXB Unmarshaller input error: " + e.getMessage(), e);
-        } catch (SAXException e) {
-            throw new CdkException("XML error: " + e.getMessage(), e);
-        } finally {
+			xIncludeTransformer.setContentHandler(unmarshallerHandler);
+			xIncludeTransformer.setResolver(resolver);
+			xmlReader.setContentHandler(xIncludeTransformer);
+			xmlReader.setProperty("http://xml.org/sax/properties/lexical-handler", xIncludeTransformer);
+			xmlReader.parse(inputSource);
 
-            // TODO Refactoring
-        }
+			// turn off the JAXB provider's default validation mechanism to
+			// avoid duplicate validation
+			// u.setValidating(false);
+			unmarshal = (T) unmarshallerHandler.getResult();
+		} catch (JAXBException e) {
+			throw new CdkException("JAXB Unmarshaller error: " + e.getMessage(), e);
+		} catch (URISyntaxException e) {
+			throw new CdkException("Invalid XML source URI: " + e.getMessage(), e);
+		} catch (IOException e) {
+			throw new CdkException("JAXB Unmarshaller input error: " + e.getMessage(), e);
+		} catch (SAXException | ParserConfigurationException e) {
+			throw new CdkException("XML error: " + e.getMessage(), e);
+		} finally {
 
-        return unmarshal;
-    }
+			// TODO Refactoring
+		}
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see org.richfaces.cdk.xmlconfig.JAXB#marshal(java.io.File, java.lang.String, T)
-     */
-    @Override
-    public <T> void marshal(Writer output, String schemaLocation, T model) throws CdkException {
-        try {
-            StreamResult result = new StreamResult(output);
+		return unmarshal;
+	}
 
-            marshal(result, schemaLocation, model);
-            output.flush();
-            output.close();
-        } catch (FileNotFoundException e) {
-            throw new CdkException("File not found", e);
-        } catch (IOException e) {
-            throw new CdkException("XML file writting error", e);
-        }
-    }
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.richfaces.cdk.xmlconfig.JAXB#marshal(java.io.File, java.lang.String,
+	 * T)
+	 */
+	@Override
+	public <T> void marshal(Writer output, String schemaLocation, T model) throws CdkException {
+		try {
+			StreamResult result = new StreamResult(output);
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see org.richfaces.cdk.xmlconfig.JAXB#marshal(javax.xml.transform.Result, java.lang.String, T)
-     */
-    @Override
-    public <T> void marshal(Result output, String schemaLocation, T model) throws CdkException {
-        try {
-            JAXBContext jc = JAXBContext.newInstance(model.getClass());
-            Marshaller marshaller = jc.createMarshaller();
+			marshal(result, schemaLocation, model);
+			output.flush();
+			output.close();
+		} catch (FileNotFoundException e) {
+			throw new CdkException("File not found", e);
+		} catch (IOException e) {
+			throw new CdkException("XML file writting error", e);
+		}
+	}
 
-            marshaller.setProperty("jaxb.formatted.output", Boolean.TRUE);
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.richfaces.cdk.xmlconfig.JAXB#marshal(javax.xml.transform.Result,
+	 * java.lang.String, T)
+	 */
+	@Override
+	public <T> void marshal(Result output, String schemaLocation, T model) throws CdkException {
+		try {
+			JAXBContext jc = JAXBContext.newInstance(model.getClass());
+			Marshaller marshaller = jc.createMarshaller();
 
-            // TODO - let writer to define additional schemes.
-            // marshaller.setProperty("jaxb.schemaLocation", Boolean.TRUE);
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+			marshaller.setProperty("jaxb.formatted.output", Boolean.TRUE);
 
-            if (null != schemaLocation) {
-                marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, schemaLocation);
+			// TODO - let writer to define additional schemes.
+			// marshaller.setProperty("jaxb.schemaLocation", Boolean.TRUE);
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-                marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", PREFFIX_MAPPER);
-            }
+			if (null != schemaLocation) {
+				marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, schemaLocation);
 
-            marshaller.marshal(model, output);
-        } catch (JAXBException e) {
-            throw new CdkException("JAXB Marshaller error", e);
-        } finally {
+				marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", PREFFIX_MAPPER);
+			}
 
-            // TODO Refactoring
-        }
-    }
+			marshaller.marshal(model, output);
+		} catch (JAXBException e) {
+			throw new CdkException("JAXB Marshaller error", e);
+		} finally {
 
-    /**
-     * <p class="changed_added_4_0">
-     * Close input source after parsing.
-     * </p>
-     *
-     * @param source
-     */
-    private void closeSource(Source source) {
-        if (source instanceof SAXSource) {
-            SAXSource saxSource = (SAXSource) source;
-            InputSource inputSource = saxSource.getInputSource();
+			// TODO Refactoring
+		}
+	}
 
-            try {
-                Reader stream = inputSource.getCharacterStream();
+	/**
+	 * <p class="changed_added_4_0">
+	 * Close input source after parsing.
+	 * </p>
+	 *
+	 * @param source
+	 */
+	private void closeSource(Source source) {
+		if (source instanceof SAXSource) {
+			SAXSource saxSource = (SAXSource) source;
+			InputSource inputSource = saxSource.getInputSource();
 
-                if (null != stream) {
-                    stream.close();
-                } else {
-                    InputStream byteStream = inputSource.getByteStream();
+			try {
+				Reader stream = inputSource.getCharacterStream();
 
-                    if (null != byteStream) {
-                        byteStream.close();
-                    }
-                }
-            } catch (IOException e) {
+				if (null != stream) {
+					stream.close();
+				} else {
+					InputStream byteStream = inputSource.getByteStream();
 
-                // Can be ignored because source has already been read.
-            }
-        }
-    }
+					if (null != byteStream) {
+						byteStream.close();
+					}
+				}
+			} catch (IOException e) {
 
-    public static boolean isCollections(Class<?> targetType, Object propertyValue) {
-        return Collection.class.isAssignableFrom(targetType) && propertyValue instanceof Collection;
-    }
+				// Can be ignored because source has already been read.
+			}
+		}
+	}
+
+	public static boolean isCollections(Class<?> targetType, Object propertyValue) {
+		return Collection.class.isAssignableFrom(targetType) && propertyValue instanceof Collection;
+	}
 }
