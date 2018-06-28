@@ -135,8 +135,6 @@ public class CdkProcessorTest extends AnnotationProcessorTestBase {
         expect((Set<TypeElement>) roundEnv.getRootElements()).andReturn(Collections.singleton(element));
         expect(element.getKind()).andReturn(ElementKind.CLASS);
         expect(element.getAnnotation(TestAnnotation.class)).andReturn(null);
-        // validator.verify(library);
-        // expectLastCall();
         replay(element, roundEnv, builder, validator, annotationProcessor);
         processor.process(Collections.singleton(element), roundEnv);
         verify(element, roundEnv, builder, validator, annotationProcessor);
