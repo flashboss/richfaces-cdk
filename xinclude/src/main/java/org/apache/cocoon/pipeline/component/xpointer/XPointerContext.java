@@ -34,74 +34,75 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 public final class XPointerContext implements NamespaceContext {
-    private static final String XML = "xml";
-    private static final String XMLNS = "xmlns";
-    private static final String XMLNS_NAMESPACE = "http://www.w3.org/2000/xmlns/";
-    private static final String XML_NAMESPACE = "http://www.w3.org/XML/1998/namespace";
-    private final Logger logger;
-    private Map<String, String> prefixes = new HashMap<String, String>();
-    private Document document;
-    private final EntityResolver resolver;
-    private InputSource source;
-    private String xPointer;
-    private SAXConsumer xmlConsumer;
+	private static final String XML = "xml";
+	private static final String XMLNS = "xmlns";
+	private static final String XMLNS_NAMESPACE = "http://www.w3.org/2000/xmlns/";
+	private static final String XML_NAMESPACE = "http://www.w3.org/XML/1998/namespace";
+	private final Logger logger;
+	private Map<String, String> prefixes = new HashMap<String, String>();
+	private Document document;
+	private final EntityResolver resolver;
+	private InputSource source;
+	private String xPointer;
+	private SAXConsumer xmlConsumer;
 
-    public XPointerContext(String xPointer, InputSource source, SAXConsumer xmlConsumer, EntityResolver resolver, Logger log) {
-        this.xPointer = xPointer;
-        this.source = source;
-        this.xmlConsumer = xmlConsumer;
-        this.resolver = resolver;
-        this.logger = log;
-    }
+	public XPointerContext(String xPointer, InputSource source, SAXConsumer xmlConsumer, EntityResolver resolver,
+			Logger log) {
+		this.xPointer = xPointer;
+		this.source = source;
+		this.xmlConsumer = xmlConsumer;
+		this.resolver = resolver;
+		this.logger = log;
+	}
 
-    public String getXPointer() {
-        return xPointer;
-    }
+	public String getXPointer() {
+		return xPointer;
+	}
 
-    public InputSource getSource() {
-        return source;
-    }
+	public InputSource getSource() {
+		return source;
+	}
 
-    public SAXConsumer getXmlConsumer() {
-        return xmlConsumer;
-    }
+	public SAXConsumer getXmlConsumer() {
+		return xmlConsumer;
+	}
 
-    public Logger getLogger() {
-        return logger;
-    }
+	public Logger getLogger() {
+		return logger;
+	}
 
-    public Document getDocument() throws IOException, SAXException {
-        if (document == null) {
-            document = DOMUtils.toDOM(source, resolver);
-        }
+	public Document getDocument() throws IOException, SAXException {
+		if (document == null) {
+			document = DOMUtils.toDOM(source, resolver);
+		}
 
-        return document;
-    }
+		return document;
+	}
 
-    public void addPrefix(String prefix, String namespaceURI) {
-        if (prefix.equalsIgnoreCase(XML) || prefix.equals(XMLNS)) {
-            return;
-        }
+	public void addPrefix(String prefix, String namespaceURI) {
+		if (prefix.equalsIgnoreCase(XML) || prefix.equals(XMLNS)) {
+			return;
+		}
 
-        if (namespaceURI.equals(XML_NAMESPACE) || namespaceURI.equals(XMLNS_NAMESPACE)) {
-            return;
-        }
+		if (namespaceURI.equals(XML_NAMESPACE) || namespaceURI.equals(XMLNS_NAMESPACE)) {
+			return;
+		}
 
-        prefixes.put(prefix, namespaceURI);
-    }
+		prefixes.put(prefix, namespaceURI);
+	}
 
-    public String getNamespaceURI(String prefix) {
-        return prefixes.get(prefix);
-    }
+	public String getNamespaceURI(String prefix) {
+		return prefixes.get(prefix);
+	}
 
-    // This method isn't necessary for XPath processing.
-    public String getPrefix(String namespaceURI) {
-        throw new UnsupportedOperationException();
-    }
+	// This method isn't necessary for XPath processing.
+	public String getPrefix(String namespaceURI) {
+		throw new UnsupportedOperationException();
+	}
 
-    @SuppressWarnings("unchecked")
-    // This method isn't necessary for XPath processing either.
-    public Iterator getPrefixes(String namespaceURI) {
-        throw new UnsupportedOperationException();
-    }
+	@Override
+	// This method isn't necessary for XPath processing either.
+	public Iterator<String> getPrefixes(String namespaceURI) {
+		throw new UnsupportedOperationException();
+	}
 }
