@@ -95,7 +95,6 @@ public abstract class SimpleVisitor<R, D> implements Visitor<R, D> {
         return defaultAction(model, param);
     }
 
-    @SuppressWarnings("unchecked")
     public R visit(ModelElement model, D param) {
         return defaultAction(model, param);
     }

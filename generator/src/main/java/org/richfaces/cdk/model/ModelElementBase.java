@@ -14,7 +14,9 @@ import com.google.common.collect.Lists;
  *
  */
 public class ModelElementBase extends BeanModelBase implements GeneratedFacesComponent, ViewElement, Serializable {
-    private FacesId id;
+
+	private static final long serialVersionUID = 6431403358094012738L;
+	private FacesId id;
     private ClassName targetClass;
     private ClassName baseClass;
     private final ModelCollection<TagModel> tags = ModelSet.<TagModel>create();

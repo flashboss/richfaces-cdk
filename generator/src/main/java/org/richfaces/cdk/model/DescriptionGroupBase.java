@@ -28,7 +28,9 @@ import java.io.Serializable;
  * @since Jan 22, 2010
  */
 public class DescriptionGroupBase implements DescriptionGroup, Extensible<ConfigExtension>, Serializable {
-    /**
+
+	private static final long serialVersionUID = -6906311344064299817L;
+	/**
      * <p class="changed_added_4_0">
      * Long description for documentation
      * </p>

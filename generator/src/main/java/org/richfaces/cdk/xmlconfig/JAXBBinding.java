@@ -26,8 +26,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
 import java.io.Writer;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -42,8 +40,6 @@ import javax.xml.bind.util.ValidationEventCollector;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.apache.cocoon.pipeline.component.sax.XIncludeTransformer;
@@ -227,37 +223,6 @@ public class JAXBBinding implements JAXB {
 		} finally {
 
 			// TODO Refactoring
-		}
-	}
-
-	/**
-	 * <p class="changed_added_4_0">
-	 * Close input source after parsing.
-	 * </p>
-	 *
-	 * @param source
-	 */
-	private void closeSource(Source source) {
-		if (source instanceof SAXSource) {
-			SAXSource saxSource = (SAXSource) source;
-			InputSource inputSource = saxSource.getInputSource();
-
-			try {
-				Reader stream = inputSource.getCharacterStream();
-
-				if (null != stream) {
-					stream.close();
-				} else {
-					InputStream byteStream = inputSource.getByteStream();
-
-					if (null != byteStream) {
-						byteStream.close();
-					}
-				}
-			} catch (IOException e) {
-
-				// Can be ignored because source has already been read.
-			}
 		}
 	}
 

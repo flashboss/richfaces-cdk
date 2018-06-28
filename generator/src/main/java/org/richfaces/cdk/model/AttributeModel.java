@@ -30,15 +30,18 @@ package org.richfaces.cdk.model;
  *
  */
 public class AttributeModel extends PropertyBase {
-    public AttributeModel() {
-        super();
-    }
 
-    public AttributeModel(String name, boolean required, ClassName type, String description) {
-        super();
-        setName(name);
-        setRequired(required);
-        setType(type);
-        setDescription(description);
-    }
+	private static final long serialVersionUID = -6271576935837189037L;
+
+	public AttributeModel() {
+		super();
+	}
+
+	public AttributeModel(String name, boolean required, ClassName type, String description) {
+		super();
+		setName(name);
+		setRequired(required);
+		setType(type);
+		setDescription(description);
+	}
 }

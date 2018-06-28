@@ -33,7 +33,10 @@ import javax.xml.namespace.QName;
  *
  */
 public final class QNameComparator implements Comparator<QName>, Serializable {
-    public static final Comparator<QName> QNAME_COMPARATOR = new QNameComparator();
+
+	private static final long serialVersionUID = 7494914568193503177L;
+	
+	public static final Comparator<QName> QNAME_COMPARATOR = new QNameComparator();
 
     private QNameComparator() {
         // private constructor

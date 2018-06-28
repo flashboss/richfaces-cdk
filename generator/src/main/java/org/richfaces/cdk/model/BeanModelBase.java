@@ -32,54 +32,58 @@ import java.util.Comparator;
  *
  */
 public class BeanModelBase extends DescriptionGroupBase {
-    private final ModelCollection<PropertyBase> attributes = ModelSet.<PropertyBase>create(new PropertyBaseComparator());
 
-    private static class PropertyBaseComparator implements Comparator<PropertyBase>, Serializable {
-        @Override
-        public int compare(PropertyBase o1, PropertyBase o2) {
-            if (o1 != null && o2 != null && null != o1.getName() && null != o2.getName()) {
-                return o1.getName().compareTo(o2.getName());
-            } else {
-                return 0;
-            }
-        }
-    }
+	private static final long serialVersionUID = 5632515286110136536L;
 
-    /**
-     * <p class="changed_added_4_0">
-     * Represents JSF component attributes and properties.
-     * </p>
-     *
-     * @return the attributes
-     */
-    public ModelCollection<PropertyBase> getAttributes() {
-        return attributes;
-    }
+	private final ModelCollection<PropertyBase> attributes = ModelSet
+			.<PropertyBase>create(new PropertyBaseComparator());
 
-    /**
-     * <p class="changed_added_4_0">
-     * Return bean attribute for given name.
-     * </p>
-     *
-     * @param name
-     * @return
-     */
-    public PropertyBase getAttribute(final String name) {
-        return attributes.find(new Named.NamePredicate(name));
-    }
+	private static class PropertyBaseComparator implements Comparator<PropertyBase>, Serializable {
+		@Override
+		public int compare(PropertyBase o1, PropertyBase o2) {
+			if (o1 != null && o2 != null && null != o1.getName() && null != o2.getName()) {
+				return o1.getName().compareTo(o2.getName());
+			} else {
+				return 0;
+			}
+		}
+	}
 
-    public PropertyBase getOrCreateAttribute(String attributeName) {
-        PropertyBase attribute = getAttribute(attributeName);
-        if (null == attribute) {
-            attribute = createAttribute();
-            attribute.setName(attributeName);
-            attributes.add(attribute);
-        }
+	/**
+	 * <p class="changed_added_4_0">
+	 * Represents JSF component attributes and properties.
+	 * </p>
+	 *
+	 * @return the attributes
+	 */
+	public ModelCollection<PropertyBase> getAttributes() {
+		return attributes;
+	}
 
-        return attribute;
-    }
+	/**
+	 * <p class="changed_added_4_0">
+	 * Return bean attribute for given name.
+	 * </p>
+	 *
+	 * @param name
+	 * @return
+	 */
+	public PropertyBase getAttribute(final String name) {
+		return attributes.find(new Named.NamePredicate(name));
+	}
 
-    protected PropertyBase createAttribute() {
-        return new PropertyModel();
-    }
+	public PropertyBase getOrCreateAttribute(String attributeName) {
+		PropertyBase attribute = getAttribute(attributeName);
+		if (null == attribute) {
+			attribute = createAttribute();
+			attribute.setName(attributeName);
+			attributes.add(attribute);
+		}
+
+		return attribute;
+	}
+
+	protected PropertyBase createAttribute() {
+		return new PropertyModel();
+	}
 }

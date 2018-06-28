@@ -27,4 +27,6 @@ package org.richfaces.cdk.model;
  *
  */
 public class PropertyModel extends PropertyBase {
+
+	private static final long serialVersionUID = 6577087273772665387L;
 }

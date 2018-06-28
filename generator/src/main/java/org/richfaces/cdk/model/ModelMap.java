@@ -32,7 +32,10 @@ import java.util.TreeMap;
  *
  */
 public class ModelMap<K, E extends ModelElement<? super E>> extends TreeMap<K, E> {
-    public static <I, T extends ModelElement<? super T>> ModelMap<I, T> create() {
+
+	private static final long serialVersionUID = 572133748500593096L;
+
+	public static <I, T extends ModelElement<? super T>> ModelMap<I, T> create() {
         return new ModelMap<I, T>();
     }
 
