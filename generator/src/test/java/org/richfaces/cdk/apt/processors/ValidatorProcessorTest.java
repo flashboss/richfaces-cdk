@@ -124,20 +124,6 @@ public class ValidatorProcessorTest extends AnnotationProcessorTestBase {
 		model = getValidatorModelForSetNames(true, "GeneratedClass", "BaseClass", false);
 		check("GeneratedClass", "BaseClass", true, model);
 
-		// /////////////////////////////// ABSTRACT
-		// ///////////////////////////////////////
-		// @JsfValidator public abstract class BaseClass { ...
-		// checkAbstractWithException(null);
-
-		// @JsfValidator(validatorClass = "") public abstract class BaseClass { ...
-		// checkAbstractWithException("");
-
-		// @JsfValidator(validatorClass = BaseClass) public abstract class BaseClass {
-		// ...
-		// checkAbstractWithException("BaseClass");
-
-		// @JsfValidator(validatorClass = GeneratedClass) public abstract class
-		// BaseClass { ...
 		model = getValidatorModelForSetNames(true, "GeneratedClass", "BaseClass", true);
 		check("GeneratedClass", "BaseClass", true, model);
 	}
@@ -148,13 +134,9 @@ public class ValidatorProcessorTest extends AnnotationProcessorTestBase {
 	}
 
 	private void check(String validatorClass, String baseClass, boolean generate, ValidatorModel model) {
-		if (baseClass != null) {
-			// assertEquals(model.getBaseClass().toString(), baseClass);
-		} else {
+		if (baseClass == null) {
 			assertNull(model.getBaseClass());
 		}
-
-		// assertEquals(generate, model.isGenerate());
 	}
 
 	private ValidatorModel getValidatorModelForSetNames(boolean isAnnotationDefined, String validatorClass,
@@ -180,7 +162,6 @@ public class ValidatorProcessorTest extends AnnotationProcessorTestBase {
 		}
 
 		EasyMock.verify();
-		// ValidatorProcessor.setClassNames(element, validatorModel, validator);
 		return validatorModel;
 	}
 }

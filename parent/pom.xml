@@ -31,9 +31,9 @@
 		<version.jboss-el>1.0_02.CR6</version.jboss-el>
 		<version.xsom>20081112</version.xsom>
 		<version.google-functional-collections>1.1.7</version.google-functional-collections>
-		<version.guice>3.0</version.guice>
-		<version.sisu>3.1.0</version.sisu>
-		<version.javaparser>1.0.1</version.javaparser>
+		<version.guice>4.2.0</version.guice>
+		<version.sisu>4.2.0</version.sisu>
+		<version.javaparser>3.6.11</version.javaparser>
 		<version.guava>11.0.2</version.guava>
 		<version.jcommander>1.20</version.jcommander>
 		<version.plexus-utils>1.5.15</version.plexus-utils>
@@ -214,8 +214,8 @@
 				<version>${version.guice}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.google.code.javaparser</groupId>
-				<artifactId>javaparser</artifactId>
+				<groupId>com.github.javaparser</groupId>
+				<artifactId>javaparser-core</artifactId>
 				<version>${version.javaparser}</version>
 			</dependency>
 			<dependency>

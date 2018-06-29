@@ -19,13 +19,9 @@ import com.google.common.collect.Iterables;
 public class AptSourceUtilsAnnotationsTest extends SourceUtilsTestBase {
 	private static final String ANNOTATIONS_TEST_SUB_CLASS = "AnnotationsTestSubClass";
 	private static final String ANNOTATIONS_TEST_CLASS = "AnnotationsTestClass";
-	private static final String TEST_CLASS = "TestClass";
-	private static final String TEST_INTERFACE = "TestInterface";
 	private static final String PACKAGE_PATH = "org/richfaces/cdk/apt/";
 	private static final String CLASS_JAVA = PACKAGE_PATH + ANNOTATIONS_TEST_CLASS + ".java";
 	private static final String SUB_CLASS_JAVA = PACKAGE_PATH + ANNOTATIONS_TEST_SUB_CLASS + ".java";
-	private static final String TEST_CLASS_JAVA = PACKAGE_PATH + TEST_CLASS + ".java";
-	private static final String TEST_INTERFACE_JAVA = PACKAGE_PATH + TEST_INTERFACE + ".java";
 
 	@Test
 	public void testGetAnnotationMirror() {
@@ -170,6 +166,6 @@ public class AptSourceUtilsAnnotationsTest extends SourceUtilsTestBase {
 
 	@Override
 	protected Iterable<String> sources() {
-		return ImmutableList.of(CLASS_JAVA, SUB_CLASS_JAVA, TEST_CLASS_JAVA, TEST_INTERFACE_JAVA);
+		return ImmutableList.of(CLASS_JAVA, SUB_CLASS_JAVA);
 	}
 }

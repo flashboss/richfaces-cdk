@@ -104,20 +104,12 @@ public class ComponentProcessorTest extends AnnotationProcessorTestBase {
         AnnotationMirror facet = createMock(AnnotationMirror.class);
         expect(utils.getBeanPropertiesAnnotatedWith(eq(Facet.class), same(componentElement))).andReturn(
                 Collections.<BeanProperty>emptySet());
-        // expect(annotation.facets()).andReturn(new Facet[] { facet });
         expect(utils.getAnnotationValues(annotation, "facets", AnnotationMirror.class)).andReturn(Collections.singleton(facet));
         expect(utils.isDefaultValue(same(facet), eq("name"))).andReturn(false);
         expect(utils.getAnnotationValue(facet, "name", String.class)).andReturn("foo");
         expect(utils.isDefaultValue(same(facet), eq("description"))).andReturn(true);
         expect(utils.isDefaultValue(same(facet), eq("generate"))).andReturn(false);
         expect(utils.getAnnotationValue(facet, "generate", Boolean.class)).andReturn(true);
-        // expect(facet.name()).andReturn("foo");
-        // expect(facet.description()).andReturn(this.description);
-        // expect(facet.generate()).andReturn(true);
-        // expect(this.description.smallIcon()).andReturn("");
-        // expect(this.description.largeIcon()).andReturn("");
-        // expect(this.description.displayName()).andReturn("fooFacet").times(2);
-        // expect(this.description.value()).andReturn("");
         replay(utils, componentElement, jaxb, annotation, property, facet, description);
 
         processor.processFacets(componentElement, model, annotation);
@@ -127,9 +119,6 @@ public class ComponentProcessorTest extends AnnotationProcessorTestBase {
         FacetModel facetModel = Iterables.getOnlyElement(model.getFacets());
         assertTrue(facetModel.getGenerate());
         assertEquals("foo", facetModel.getName());
-        // assertEquals("my comment", facetModel.getDescription());
-        // assertEquals("fooFacet", facetModel.getDisplayname());
-        // assertNull(facetModel.getIcon());
     }
 
     @Test

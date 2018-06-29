@@ -69,7 +69,6 @@ import com.google.inject.Inject;
 @RunWith(CdkTestRunner.class)
 public class TaskFactoryTest extends AnnotationProcessorTestBase {
 	private static final String CLASS_JAVA = "org/richfaces/cdk/apt/TestClass.java";
-	private static final String INTERFACE_JAVA = "org/richfaces/cdk/apt/TestInterface.java";
 	private static final String SUB_CLASS_JAVA = "org/richfaces/cdk/apt/TestSubClass.java";
 	@Mock
 	CdkProcessor processor;
@@ -130,6 +129,6 @@ public class TaskFactoryTest extends AnnotationProcessorTestBase {
 
 	@Override
 	protected Iterable<String> sources() {
-		return ImmutableList.of(CLASS_JAVA, SUB_CLASS_JAVA, INTERFACE_JAVA);
+		return ImmutableList.of(CLASS_JAVA, SUB_CLASS_JAVA);
 	}
 }
