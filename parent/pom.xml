@@ -34,7 +34,7 @@
 		<version.guice>4.2.0</version.guice>
 		<version.sisu>4.2.0</version.sisu>
 		<version.javaparser>3.6.11</version.javaparser>
-		<version.guava>11.0.2</version.guava>
+		<version.guava>25.1-jre</version.guava>
 		<version.jcommander>1.20</version.jcommander>
 		<version.plexus-utils>1.5.15</version.plexus-utils>
 		<version.plexus-velocity>1.1.2</version.plexus-velocity>
