@@ -32,7 +32,6 @@
 		<version.xsom>20081112</version.xsom>
 		<version.google-functional-collections>1.1.7</version.google-functional-collections>
 		<version.guice>4.2.0</version.guice>
-		<version.sisu>4.2.0</version.sisu>
 		<version.javaparser>3.6.11</version.javaparser>
 		<version.guava>25.1-jre</version.guava>
 		<version.jcommander>1.20</version.jcommander>
@@ -217,22 +216,6 @@
 				<groupId>com.github.javaparser</groupId>
 				<artifactId>javaparser-core</artifactId>
 				<version>${version.javaparser}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.sonatype.sisu</groupId>
-				<artifactId>sisu-guice</artifactId>
-				<version>${version.sisu}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.sonatype.sisu.inject</groupId>
-				<artifactId>guice-multibindings</artifactId>
-				<version>${version.sonatype-sisu}</version>
-				<exclusions>
-					<exclusion>
-						<groupId>com.google.inject</groupId>
-						<artifactId>guice</artifactId>
-					</exclusion>
-				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>com.beust</groupId>
