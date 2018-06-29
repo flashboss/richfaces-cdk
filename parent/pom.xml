@@ -48,7 +48,7 @@
 
 		<!-- Plugin versions -->
 		<version.modello.plugin>1.0.2</version.modello.plugin>
-		<version.guice.plugin>2.2.0</version.guice.plugin>
+		<version.guice.plugin>2.21.1</version.guice.plugin>
 		<version.gmaven.plugin>1.0</version.gmaven.plugin>
 
 		<!-- maven-compiler-plugin -->
