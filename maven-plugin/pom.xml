@@ -26,8 +26,8 @@
             <artifactId>maven-plugin-api</artifactId>
             <exclusions>
                 <exclusion>
-                    <artifactId>sisu-guice</artifactId>
                     <groupId>org.sonatype.sisu</groupId>
+                    <artifactId>sisu-guice</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -61,12 +61,6 @@
             <groupId>org.richfaces.cdk</groupId>
             <artifactId>generator</artifactId>
             <version>${project.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>sisu-guice</artifactId>
-                    <groupId>org.sonatype.sisu</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         
         <!-- Test dependencies -->
